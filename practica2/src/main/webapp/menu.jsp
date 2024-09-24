@@ -19,7 +19,17 @@
         <title>Home Menu</title>
     </head>
     <body>
-        <h1>Welcome <% out.println((String)session.getAttribute("username"));%></h1>
+        <div class="wrapper">
+            <h1>Welcome <% out.println((String)session.getAttribute("username"));%></h1>
+            <div class="card">
+                <h3> <a href="buscarImagen.jsp">Search an Image</a> </h3>
+            </div>
+            <!-- podriem afegir un de llistar imatges i que sigui una pagina que es mostrin totes tipo printerest o algo semblant-->
+            <div class="card">
+                <h3> <a href="registrarImagen.jsp">Register an Image</a> </h3>
+            </div>
+            
+        </div>
     </body>
     <% } %>
 </html>
