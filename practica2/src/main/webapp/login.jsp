@@ -1,5 +1,5 @@
 <%-- 
-    Document   : index
+    Document   : login
     Created on : 17 sept 2024, 17:45:27
     Author     : alumne
 --%>
@@ -9,11 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Practica 2</title>
+        <title>Login</title>
     </head>
-     <body>
+    <body>
         <div class="wrapper">
-            <h2>Login</h2>
+            <h1>Login</h1>
             <form action="login" method = "POST">
                 
                 <div class="input-box">

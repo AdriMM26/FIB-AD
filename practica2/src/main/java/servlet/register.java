@@ -23,8 +23,8 @@ import java.util.logging.Logger;
  *
  * @author alumne
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(name = "register", urlPatterns = {"/register"})
+public class register extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +36,7 @@ public class login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
@@ -47,26 +47,29 @@ public class login extends HttpServlet {
             String username = request.getParameter("uname");
             String password = request.getParameter("pw");
             
-            boolean existUser = OperationsDB.check_user(username, password, connection);
+            int new_user = OperationsDB.register_user(username, password, connection);
             
-            /* Manage session with HttpSession */
-            if(existUser)  {
-                HttpSession session = request.getSession();
-                session.setAttribute("username", username);
-                response.sendRedirect("menu.jsp");
-            }
-            else {
-                HttpSession session = request.getSession();
-                session.setAttribute("errorMessage","Incorrect username or password");
-                response.sendRedirect("error.jsp");
-            }
+            HttpSession session = request.getSession();
             
-            ConnectDB.close_connection(connection);
-       
+            switch(new_user) {
+                case -1:
+                    session.setAttribute("errorMessage","Ups, Something went wrong");
+                    response.sendRedirect("error.jsp");
+                    break;
+                case 0:
+                    session.setAttribute("errorMessage","User already registered");
+                    response.sendRedirect("error.jsp");
+                    break;
+                default:
+                    session.setAttribute("successMessage","User registered succesfully");
+                    response.sendRedirect("login.jsp");
+                    break;
+            }
+          
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(register.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -80,7 +83,7 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -94,7 +97,7 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

@@ -34,4 +34,23 @@ public class OperationsDB {
             return false;
         }
     }
+    
+    public static int register_user (String username, String password, Connection connection) {
+        try{
+        String query = "insert into usuarios(id_usuario, password) values (?,?)";
+        /* Prepare: An SQL statement template is created and sent to the database. Certain values are left unspecified, called parameters (labeled "?") */
+        PreparedStatement statement = connection.prepareStatement(query);
+        
+        /* set the correct values */
+            statement.setString(1, username);
+            statement.setString(2, password);
+            
+            statement.executeUpdate();
+            return 1;
+        } catch(SQLException e){
+            System.err.println(e.getMessage());
+            if(e.getErrorCode() == 3000) return 0;
+            else return -1;
+        }
+    }
 }

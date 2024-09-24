@@ -9,16 +9,28 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Register</title>
     </head>
     <body>
-        <h1>Register</h1>
-        <form action="register" method="post">
-            <label>Username:</label>
-            <input type="text" placeholder="Enter Username" name="uname" required><!-- comment -->
-            <br><br><label>Password:</label>
-            <input type="password" placeholder="Enter Password" name="psw" required><!-- comment -->
-            <br><br><br><br><button type="submit">Register</button>
-        </form>
+        <div class = "wrapper">
+            <h1>Register</h1>
+            <form action="register" method = "POST">
+
+                <div class="input-box">
+                    <label>Username:</label>
+                    <input type="text" name="uname" placeholder="Write your username" required>
+                </div>  
+                <div class="input-box">
+                    <label>Password:</label>
+                    <input type="password" name="pw" placeholder="Write your password" required>
+                </div>
+                <div class="input-box button">
+                    <input type="Submit" value="Register">
+                </div>
+                <div class="text">
+                <h3>Have an account? <a href="login.jsp">Sign on</a> </h3> 
+                </div>
+            </form>
+        </div>
     </body>
 </html>

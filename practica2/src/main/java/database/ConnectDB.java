@@ -26,7 +26,7 @@ public class ConnectDB {
         return connection;
     }
     
-    public static void close_connection(Connection c) throws SQLException{
+    public static void close_connection(Connection c){
         try{
             if(c!=null) c.close();
         }catch(SQLException e){

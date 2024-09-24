@@ -9,9 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Error</title>
     </head>
     <body>
-        
+        <div class = "wrapper">
+            <h1>Ups, Something went wrong</h1>
+            <h3>Error: <% out.println((String)session.getAttribute("errorMessage"));%></h3>
+            <br>
+            <a class="ref" href="login.jsp">Go to Login</a>
+        </div>
     </body>
 </html>
