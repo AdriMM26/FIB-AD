@@ -7,7 +7,7 @@
     * [X] Register
     * [X] Error
     * [X] ConnectDB
-    * [ ] Menú
+    * [X] Menú
     * [ ] BuscarImagen
     * [ ] ModificarImagen
     * [ ] RegistrarImagen
