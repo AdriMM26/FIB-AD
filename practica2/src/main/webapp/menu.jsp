@@ -24,7 +24,9 @@
             <div class="card">
                 <h3> <a href="buscarImagen.jsp">Search an Image</a> </h3>
             </div>
-            <!-- podriem afegir un de llistar imatges i que sigui una pagina que es mostrin totes tipo printerest o algo semblant-->
+            <div class="card">
+                <h3> <a href="listarImagen.jsp">List all Images</a></h3>
+            </div>
             <div class="card">
                 <h3> <a href="registrarImagen.jsp">Register an Image</a> </h3>
             </div>
