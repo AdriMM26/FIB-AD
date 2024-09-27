@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import database.ConnectDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,17 +37,32 @@ public class registrarImagen extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet registrarImagen</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet registrarImagen at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        HttpSession session = request.getSession(false);
+        if(session == null || request.getContentType()==null) 
+        {
+            session = request.getSession(true);
+            session.setAttribute("errorMessage", "Invalid session");
+            response.sendRedirect("error.jsp"); 
+            
+        }
+        else{
+            try {
+            /*Open a connection with DB */
+            Connection connection = ConnectDB.open_connection();
+            
+            /* Get data from input box */
+            String title = request.getParameter("title");
+            String description = request.getParameter("descp");
+            String keywords = request.getParameter("keyw");
+            String author = request.getParameter("ath");
+            String creator = session.getAttribute("username").toString();
+            String creationDate = request.getParameter("cdate").toString();
+            String uploadDate = LocalDate.now().toString();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }
 

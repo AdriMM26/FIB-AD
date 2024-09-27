@@ -9,9 +9,40 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Register Image</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
-    <body>
-        <h1>Hello World!</h1>
+   <body>
+        <div class="wrapper">
+            <h1>Upload an Image</h1>
+            <form action="registrarImagen" method = "POST">
+                <!-- Identificador de imagen, generado automaticamente (primary key) -->
+                <div class="input-box">
+                    <input type="text" name="title" placeholder="Image title" required>
+                </div> 
+                <div class="input-box">
+                    <input type="text" name="descp" placeholder="Image description" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="keyw" placeholder="Key words for the image" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="ath" placeholder="Image author" required>
+                </div>
+                <!-- Creador (usuario que hace upload) -->
+                <div class="input-box">
+                    <input type="date" name="cdate" placeholder="Creation date" required>
+                </div>
+                <!-- Date of upload -->
+                <div class="selector">
+                    <input type="file" name="file" required/>
+                    <!--<label for="file">Choose a file</label>
+                    <i class="material-icons">upload_file</i> -->
+                </div>
+                <div class="btn">
+                    <button type="submit">Upload</button>
+                </div>
+            </form>
+        </div>
     </body>
 </html>

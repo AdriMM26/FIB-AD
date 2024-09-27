@@ -53,4 +53,10 @@ public class OperationsDB {
             else return -1;
         }
     }
+    
+    public static boolean upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate){
+        
+        return false;
+        
+    }
 }
