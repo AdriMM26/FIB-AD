@@ -14,5 +14,5 @@
     * [ ] EliminarImagen
     * [ ] Operacions DB
     * [ ] Documentar
-    * [ ] *Añadir* ListarImagen
+    * [ ] **Añadir** ListarImagen
     * [ ] CSS
