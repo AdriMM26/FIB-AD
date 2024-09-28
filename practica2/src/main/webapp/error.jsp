@@ -17,6 +17,7 @@
             <h3>Error: <% out.println((String)session.getAttribute("errorMessage"));%></h3>
             <br>
             <a class="ref" href="login.jsp">Go to Login</a>
+            <a class="ref" href="menu.jsp"> Go back to menu</a>
         </div>
     </body>
 </html>

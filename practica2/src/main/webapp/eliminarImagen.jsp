@@ -1,4 +1,4 @@
-<%-- 
+ <%-- 
     Document   : eliminarImagen
     Created on : 20 sept 2024, 10:43:43
     Author     : alumne

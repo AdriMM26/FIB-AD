@@ -59,6 +59,16 @@ public class registrarImagen extends HttpServlet {
             String creator = session.getAttribute("username").toString();
             String creationDate = request.getParameter("cdate").toString();
             String uploadDate = LocalDate.now().toString();
+            /* Esta clase representa una parte o elemento de formulario que se recibió dentro de una solicitud POST con multipart/form-data. */
+            Part filePart = request.getPart("file");
+            
+            if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && filePart != null) {
+                
+            }
+            else{
+                session.setAttribute("errorMessage", "No field can be left empty");
+                response.sendRedirect("error.jsp");
+            }
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);

@@ -43,6 +43,9 @@ public class login extends HttpServlet {
             /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
             
+            /*Get session */
+            HttpSession session = request.getSession();
+            
             /* Get data from input box */
             String username = request.getParameter("uname");
             String password = request.getParameter("pw");
@@ -51,12 +54,10 @@ public class login extends HttpServlet {
             
             /* Manage session with HttpSession */
             if(existUser)  {
-                HttpSession session = request.getSession();
                 session.setAttribute("username", username);
                 response.sendRedirect("menu.jsp");
             }
             else {
-                HttpSession session = request.getSession();
                 session.setAttribute("errorMessage","Incorrect username or password");
                 response.sendRedirect("error.jsp");
             }

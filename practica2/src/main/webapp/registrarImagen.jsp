@@ -15,7 +15,8 @@
    <body>
         <div class="wrapper">
             <h1>Upload an Image</h1>
-            <form action="registrarImagen" method = "POST">
+            <!-- Es necesario añadir enctype="multipart/form-data" para poder subir archivos-->
+            <form action="registrarImagen" method = "POST" enctype="multipart/form-data">
                 <!-- Identificador de imagen, generado automaticamente (primary key) -->
                 <div class="input-box">
                     <input type="text" name="title" placeholder="Image title" required>
@@ -36,8 +37,6 @@
                 <!-- Date of upload -->
                 <div class="selector">
                     <input type="file" name="file" required/>
-                    <!--<label for="file">Choose a file</label>
-                    <i class="material-icons">upload_file</i> -->
                 </div>
                 <div class="btn">
                     <button type="submit">Upload</button>
