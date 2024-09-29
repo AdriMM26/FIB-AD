@@ -1,18 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package servlet;
 
 import database.ConnectDB;
+import database.OperationsDB;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  * @author alumne
  */
 @WebServlet(name = "registrarImagen", urlPatterns = {"/registrarImagen"})
+@MultipartConfig
 public class registrarImagen extends HttpServlet {
 
     /**
@@ -57,16 +58,26 @@ public class registrarImagen extends HttpServlet {
             String keywords = request.getParameter("keyw");
             String author = request.getParameter("ath");
             String creator = session.getAttribute("username").toString();
-            String creationDate = request.getParameter("cdate").toString();
+            String creationDate = request.getParameter("cdate");
             String uploadDate = LocalDate.now().toString();
             /* Esta clase representa una parte o elemento de formulario que se recibió dentro de una solicitud POST con multipart/form-data. */
             Part filePart = request.getPart("file");
             
-            if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && filePart != null) {
-                
+            if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && uploadDate != null && filePart != null) {
+                   boolean insert = OperationsDB.upload_image(title, description, keywords, author, creator, creationDate, uploadDate, filePart, connection);
+                   if (insert) {
+                       response.sendRedirect("menu.jsp");
+                   }
+                   else {
+                       session.setAttribute("errorMessage", "Error uploading the image");
+                       session.setAttribute("origin","Menu");
+                       response.sendRedirect("error.jsp");
+                   }
+                   ConnectDB.close_connection(connection);
             }
             else{
                 session.setAttribute("errorMessage", "No field can be left empty");
+                session.setAttribute("origin","Menu");
                 response.sendRedirect("error.jsp");
             }
             
@@ -113,6 +124,6 @@ public class registrarImagen extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }// </editor-fold
 
 }

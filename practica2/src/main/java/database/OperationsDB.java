@@ -9,6 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author alumne
@@ -37,11 +47,11 @@ public class OperationsDB {
     
     public static int register_user (String username, String password, Connection connection) {
         try{
-        String query = "insert into usuarios(id_usuario, password) values (?,?)";
-        /* Prepare: An SQL statement template is created and sent to the database. Certain values are left unspecified, called parameters (labeled "?") */
-        PreparedStatement statement = connection.prepareStatement(query);
+            String query = "insert into usuarios(id_usuario, password) values (?,?)";
+            /* Prepare: An SQL statement template is created and sent to the database. Certain values are left unspecified, called parameters (labeled "?") */
+            PreparedStatement statement = connection.prepareStatement(query);
         
-        /* set the correct values */
+            /* set the correct values */
             statement.setString(1, username);
             statement.setString(2, password);
             
@@ -54,9 +64,48 @@ public class OperationsDB {
         }
     }
     
-    public static boolean upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate){
-        
-        return false;
-        
+    public static boolean upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate, Part filepart, Connection connection){
+        try{
+            String filename = Paths.get(filepart.getSubmittedFileName()).getFileName().toString();
+
+            String query = "insert into image(title, description, keywords, author, creator, capture_date, storage_date, filename) values (?,?,?,?,?,?,?,?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(2, title);
+            statement.setString(3, description);
+            statement.setString(4, keywords);
+            statement.setString(5, author);
+            statement.setString(6, creator);
+            statement.setString(7, creationDate);
+            statement.setString(8, uploadDate);
+            statement.setString(9, filename);
+            
+            statement.executeUpdate();
+            
+            return true;
+            
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+    
+    /*retorna la ultima id de la tabla image (ns si funciona be pero bueno)*/
+    private static int get_max_id(Connection connection) {
+        try{
+            String query = "SELECT MAX(ID) From IMAGE";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            int id;
+            if(rs.next()) {
+                id = rs.getInt(1);
+            }
+            else id = 1;
+ 
+            return id;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
     }
 }
