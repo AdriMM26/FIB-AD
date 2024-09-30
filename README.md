@@ -6,6 +6,7 @@
     * [X] Login
     * [X] Register
     * [X] Error
+    * [X] Success Page
     * [X] ConnectDB
     * [X] Menú
     * [ ] BuscarImagen
