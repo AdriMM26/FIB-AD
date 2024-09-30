@@ -10,7 +10,7 @@
     * [X] Menú
     * [ ] BuscarImagen
     * [ ] ModificarImagen
-    * [ ] RegistrarImagen
+    * [X] RegistrarImagen
     * [ ] EliminarImagen
     * [ ] Operacions DB
     * [ ] Documentar
