@@ -66,7 +66,9 @@ public class registrarImagen extends HttpServlet {
             if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && uploadDate != null && filePart != null) {
                    boolean insert = OperationsDB.upload_image(title, description, keywords, author, creator, creationDate, uploadDate, filePart, connection);
                    if (insert) {
-                       response.sendRedirect("menu.jsp");
+                       session.setAttribute("successMessage", "Image was uploaded correctly!");
+                       session.setAttribute("origin","Menu");
+                       response.sendRedirect("successOperation.jsp");
                    }
                    else {
                        session.setAttribute("errorMessage", "Error uploading the image");

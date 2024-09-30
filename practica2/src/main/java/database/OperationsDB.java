@@ -71,14 +71,14 @@ public class OperationsDB {
             String query = "insert into image(title, description, keywords, author, creator, capture_date, storage_date, filename) values (?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(query);
             
-            statement.setString(2, title);
-            statement.setString(3, description);
-            statement.setString(4, keywords);
-            statement.setString(5, author);
-            statement.setString(6, creator);
-            statement.setString(7, creationDate);
-            statement.setString(8, uploadDate);
-            statement.setString(9, filename);
+            statement.setString(1, title);
+            statement.setString(2, description);
+            statement.setString(3, keywords);
+            statement.setString(4, author);
+            statement.setString(5, creator);
+            statement.setString(6, creationDate);
+            statement.setString(7, uploadDate);
+            statement.setString(8, filename);
             
             statement.executeUpdate();
             
