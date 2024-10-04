@@ -12,7 +12,7 @@
     * [ ] BuscarImagen
     * [ ] ModificarImagen
     * [X] RegistrarImagen
-    * [ ] EliminarImagen
+    * [ ] EliminarImagen (afegir comprovació de ROWS)
     * [ ] Operacions DB
     * [ ] Documentar
     * [ ] **Añadir** ListarImagen
