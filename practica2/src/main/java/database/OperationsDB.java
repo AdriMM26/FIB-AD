@@ -10,14 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jakarta.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -89,7 +87,20 @@ public class OperationsDB {
         }
     }
     
-    /*retorna la ultima id de la tabla image (ns si funciona be pero bueno)*/
+    public static void delete_image(Integer insertID, Connection connection){
+        try{
+            String query = "DELETE From IMAGE where ID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+        
+            /* set the correct values */
+            statement.setString(1, insertID.toString());
+            statement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private static int get_max_id(Connection connection) {
         try{
             String query = "SELECT MAX(ID) From IMAGE";
@@ -107,19 +118,40 @@ public class OperationsDB {
             Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
-    }
-
-    public static void delete_image(Integer insertID, Connection connection){
-        try{
-            String query = "DELETE From IMAGE where ID=?";
-            PreparedStatement statement = connection.prepareStatement(query);
-        
-            /* set the correct values */
-            statement.setString(1, insertID.toString());
-            statement.executeUpdate();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+    
+    public static List<String[]> getAllImages() {
+        try {
+         /* Open connection */
+         Connection connection = ConnectDB.open_connection();
+         
+         List<String[]> imageList = new ArrayList<>();
+           
+         /* SQL query */
+           String query;
+           PreparedStatement statement;
+           
+           query = "SELECT * FROM IMAGE";
+           statement = connection.prepareStatement(query);
+           ResultSet rs = statement.executeQuery();
+           
+           
+           while (rs.next()) {
+             String[] imageInfo = new String[9];
+             for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }
+             imageList.add(imageInfo);
+           }
+           
+           /* Close connection */
+           ConnectDB.close_connection(connection);
+           
+           return imageList;
+           
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println(ex.getMessage());
+            Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
+    
 }

@@ -5,13 +5,39 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="database.OperationsDB" %>
+<%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
+
 <!DOCTYPE html>
 <html>
+    <%
+        if(session.getAttribute("username") == null) {
+            session.setAttribute("errorMessage", "User unknown");
+            response.sendRedirect("error.jsp");
+        }
+        else {
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Images</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="wrapper">
+            <h1>GALLERY</h1>
+            <div class ="gallery">
+                <%
+                    List<String[]> gallery = OperationsDB.getAllImages();
+                    int total = gallery.size();
+                     
+                    for(int i = 0; i < total; ++i) {
+                        String [] imageInfo = gallery.get(i);
+                        out.println(imageInfo[1]);
+                        out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> </div>");
+                    }
+                %>
+            </div>
+        </div>
     </body>
+    <% } %>
 </html>

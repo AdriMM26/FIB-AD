@@ -30,7 +30,6 @@
             <div class="card">
                 <h3> <a href="registrarImagen.jsp">Register an Image</a> </h3>
             </div>
-            
         </div>
     </body>
     <% } %>
