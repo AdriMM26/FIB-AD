@@ -64,7 +64,7 @@ public class OperationsDB {
         }
     }
     
-    public static boolean upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate, Part filepart, Connection connection){
+    public static int upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate, Part filepart, Connection connection){
         try{
             String filename = Paths.get(filepart.getSubmittedFileName()).getFileName().toString();
 
@@ -82,10 +82,10 @@ public class OperationsDB {
             
             statement.executeUpdate();
             
-            return true;
+            return get_max_id(connection);
             
         } catch (SQLException ex) {
-            return false;
+            return -1;
         }
     }
     
@@ -106,6 +106,20 @@ public class OperationsDB {
         } catch (SQLException ex) {
             Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
+        }
+    }
+
+    public static void delete_image(Integer insertID, Connection connection){
+        try{
+            String query = "DELETE From IMAGE where ID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+        
+            /* set the correct values */
+            statement.setString(1, insertID.toString());
+            statement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

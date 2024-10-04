@@ -13,6 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Files;
+import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -64,11 +68,22 @@ public class registrarImagen extends HttpServlet {
             Part filePart = request.getPart("file");
             
             if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && uploadDate != null && filePart != null) {
-                   boolean insert = OperationsDB.upload_image(title, description, keywords, author, creator, creationDate, uploadDate, filePart, connection);
-                   if (insert) {
-                       session.setAttribute("successMessage", "Image was uploaded correctly!");
-                       session.setAttribute("origin","Menu");
-                       response.sendRedirect("successOperation.jsp");
+                   Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, creationDate, uploadDate, filePart, connection);
+                   if (insertID > 0) {
+                       boolean savedImage = insert_image_to_disk(filePart, title, insertID.toString());
+                       if(savedImage){
+                           session.setAttribute("successMessage", "Image was uploaded correctly!");
+                           session.setAttribute("isImage", true);
+                           session.setAttribute("origin","Menu");
+                           response.sendRedirect("successOperation.jsp");
+                       }
+                       else{
+                           OperationsDB.delete_image(insertID, connection);
+                           session.setAttribute("errorMessage", "Error saving image");
+                           session.setAttribute("origin","Menu");
+                           response.sendRedirect("error.jsp");
+                       }
+                       
                    }
                    else {
                        session.setAttribute("errorMessage", "Error uploading the image");
@@ -127,5 +142,23 @@ public class registrarImagen extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold
+
+    private boolean insert_image_to_disk(Part filePart, String title, String uid){
+        try{
+            File path = new File("/var/webapp/imageDB");
+            String filename = title+"_"+uid;
+        
+            File file = new File (path, filename);
+        
+            InputStream input = filePart.getInputStream();
+            long numBytes;
+            numBytes = Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            if(numBytes > 0) return true;
+            else return false;
+        } catch (IOException ex){
+            return false;
+        }
+        
+    }
 
 }
