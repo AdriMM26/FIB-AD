@@ -14,7 +14,6 @@
         }
         else {
             String title = request.getParameter("title");
-            String id = request.getParameter("id");
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

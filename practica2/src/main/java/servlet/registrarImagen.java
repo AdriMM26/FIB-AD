@@ -80,7 +80,7 @@ public class registrarImagen extends HttpServlet {
                            response.sendRedirect("success.jsp");
                        }
                        else{
-                           OperationsDB.delete_image(insertID, connection);
+                           OperationsDB.delete_image(insertID.toString(), connection);
                            ConnectDB.close_connection(connection);
                            session.setAttribute("errorMessage", "Error saving image");
                            session.setAttribute("origin","Menu");

@@ -87,13 +87,13 @@ public class OperationsDB {
         }
     }
     
-    public static void delete_image(Integer insertID, Connection connection){
+    public static void delete_image(String insertID, Connection connection){
         try{
             String query = "DELETE From IMAGE where ID=?";
             PreparedStatement statement = connection.prepareStatement(query);
         
             /* set the correct values */
-            statement.setString(1, insertID.toString());
+            statement.setString(1, insertID);
             statement.executeUpdate();
             
         } catch (SQLException ex) {

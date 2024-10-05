@@ -20,10 +20,10 @@
     %>
     <script>
     function modifyImage(id, title) {
-        window.location.href = "modificarImagen.jsp?id=" + encodeURIComponent(id) + "&title=" + encodeURIComponent(title);
+        window.location.href = "modificarImagen.jsp?title=" + encodeURIComponent(title) + "&id=" + encodeURIComponent(id);;
     };
     function deleteImage(id, title) {
-        window.location.href = "eliminarImagen.jsp?id=" + encodeURIComponent(id) + "&title=" + encodeURIComponent(title);
+       window.location.href = "eliminarImagen.jsp?title=" + encodeURIComponent(title) + "&id=" + encodeURIComponent(id);
     };
     
     </script>
