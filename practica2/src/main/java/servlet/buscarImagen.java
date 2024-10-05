@@ -63,7 +63,7 @@ public class buscarImagen extends HttpServlet {
                 response.sendRedirect("buscarImagen.jsp");
             }
             else {
-                session.setAttribute("errorMessage", "Error searching the image");
+                session.setAttribute("errorMessage", "Error searching an image, try again");
                 session.setAttribute("origin","Menu");
                 response.sendRedirect("error.jsp");
             }     

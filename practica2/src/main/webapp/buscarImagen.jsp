@@ -18,6 +18,15 @@
         }
         else {
     %>
+    <script>
+    function modifyImage(id, title) {
+        window.location.href = "modificarImagen.jsp?id=" + encodeURIComponent(id) + "&title=" + encodeURIComponent(title);
+    };
+    function deleteImage(id, title) {
+        window.location.href = "eliminarImagen.jsp?id=" + encodeURIComponent(id) + "&title=" + encodeURIComponent(title);
+    };
+    
+    </script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Images</title>
@@ -45,24 +54,44 @@
                     <div class="btn">
                         <button type="submit">Search</button>
                     </div>
+                    <br>
                 </form>
             </div>
             <div class ="gallery">
                 <%
                     if(session.getAttribute("images") != null)  {
                         List<String[]> gallery = (List<String[]>)session.getAttribute("images");
+                        String username = (String)session.getAttribute("username");
                         int total = gallery.size();
-
+                         
                         for(int i = 0; i < total; ++i) {
                             String [] imageInfo = gallery.get(i);
                             out.println(imageInfo[1]);
-                            out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> </div>");
+                            if(imageInfo[5].equals(username)) {
+                                out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
+                                out.println("<br>");
+                                out.println("<button onClick= \"modifyImage('" + imageInfo[0] +"','"+ imageInfo[1] + "')\">Modify</button>");
+                                out.println("<button onClick= \"deleteImage('" + imageInfo[0] +"','"+ imageInfo[1] + "')\">Delete</button>");
+                                out.println("<br> </div>");   
+                            }
+                            else  {
+                                out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
+                                out.println("<br> </div>");
+                            }
                         }
                     }
                 %>
             </div>
         </div>
     </body>
+    <script>
+        document.querySelectorAll('.gallery img').forEach(image =>{
+            
+            image.onclick = () =>{
+                alert("end of the world");
+            }; 
+        });         
+    </script> 
     <% } %>
 </html>
 
