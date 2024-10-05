@@ -100,6 +100,85 @@ public class OperationsDB {
             Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+      
+    public static List<String[]> get_all_images() {
+        try {
+         /* Open connection */
+        Connection connection = ConnectDB.open_connection();
+
+        List<String[]> images = new ArrayList<>();
+
+        String query = "SELECT * FROM IMAGE";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet rs = statement.executeQuery();
+
+        while (rs.next()) {
+          String[] imageInfo = new String[9];
+          for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }
+          images.add(imageInfo);
+        }
+        ConnectDB.close_connection(connection);
+
+        return images;
+           
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println(ex.getMessage());
+            Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public static List<String[]> get_images(String title,String description,String keywords,String author,String creationDate,Connection connection) {
+        try{
+            
+            List<String[]> images = new ArrayList<>();
+            List<Object> values = new ArrayList<>();
+            
+            String query = "SELECT * FROM IMAGE WHERE 1=1";
+            PreparedStatement statement;
+            
+            if(!title.isBlank()) {
+                query += " AND TITLE LIKE ?";
+                values.add("%" + title + "%");
+            }
+            if(!description.isBlank()) {
+                query += " AND DESCRIPTION LIKE ?";
+                values.add( "%" + description + "%");
+            }
+            if(!keywords.isBlank()) {
+                query += " AND KEYWORDS LIKE ?";
+                values.add("%" + keywords + "%");
+            }
+            if(!author.isBlank()) {
+                query += " AND AUTHOR LIKE ?";
+                values.add("%" + author + "%");
+            }
+            if(!creationDate.isBlank()) {
+                query += " AND CAPTURE_DATE LIKE ?";
+                values.add("%" + creationDate + "%");
+            }
+            
+            statement = connection.prepareStatement(query);
+            for(int i = 0; i < values.size(); ++i) {
+                statement.setObject(i+1, values.get(i));
+            }
+            ResultSet rs = statement.executeQuery();
+            
+            while (rs.next()) {
+                String[] imageInfo = new String[9];
+                for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }
+                images.add(imageInfo);
+            }
+            
+            ConnectDB.close_connection(connection);
+
+            return images;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
     
     private static int get_max_id(Connection connection) {
         try{
@@ -117,40 +196,6 @@ public class OperationsDB {
         } catch (SQLException ex) {
             Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
-        }
-    } 
-    
-    public static List<String[]> getAllImages() {
-        try {
-         /* Open connection */
-         Connection connection = ConnectDB.open_connection();
-         
-         List<String[]> imageList = new ArrayList<>();
-           
-         /* SQL query */
-           String query;
-           PreparedStatement statement;
-           
-           query = "SELECT * FROM IMAGE";
-           statement = connection.prepareStatement(query);
-           ResultSet rs = statement.executeQuery();
-           
-           
-           while (rs.next()) {
-             String[] imageInfo = new String[9];
-             for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }
-             imageList.add(imageInfo);
-           }
-           
-           /* Close connection */
-           ConnectDB.close_connection(connection);
-           
-           return imageList;
-           
-        } catch (SQLException | ClassNotFoundException ex) {
-            System.err.println(ex.getMessage());
-            Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
         }
     }
     

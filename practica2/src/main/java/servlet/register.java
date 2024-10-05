@@ -60,7 +60,8 @@ public class register extends HttpServlet {
                     break;
                 default:
                     session.setAttribute("successMessage","User registered succesfully");
-                    response.sendRedirect("login.jsp");
+                    session.setAttribute("origin","Login");
+                    response.sendRedirect("success.jsp");
                     break;
             }
           

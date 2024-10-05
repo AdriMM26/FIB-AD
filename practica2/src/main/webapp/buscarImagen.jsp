@@ -5,13 +5,64 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="database.OperationsDB" %>
+<%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
+
 <!DOCTYPE html>
 <html>
+    <%
+        if(session.getAttribute("username") == null) {
+            session.setAttribute("errorMessage", "User unknown");
+            response.sendRedirect("error.jsp");
+        }
+        else {
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Images</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="wrapper">
+            <h1>SEARCH IN GALLERY</h1>
+            <div class = "filer">
+                <form action="buscarImagen" method = "POST">
+                    <div class="input-box">
+                    <input type="text" name="title" placeholder="Image title">
+                    </div> 
+                    <div class="input-box">
+                        <input type="text" name="descp" placeholder="Image description">
+                    </div>
+                    <div class="input-box">
+                        <input type="text" name="keyw" placeholder="Image keywords">
+                    </div>
+                    <div class="input-box">
+                        <input type="text" name="ath" placeholder="Image author">
+                    </div>
+                    <div class="input-box">
+                        <input type="date" name="cdate" placeholder="Creation date">
+                    </div>
+                    <div class="btn">
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class ="gallery">
+                <%
+                    if(session.getAttribute("images") != null)  {
+                        List<String[]> gallery = (List<String[]>)session.getAttribute("images");
+                        int total = gallery.size();
+
+                        for(int i = 0; i < total; ++i) {
+                            String [] imageInfo = gallery.get(i);
+                            out.println(imageInfo[1]);
+                            out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> </div>");
+                        }
+                    }
+                %>
+            </div>
+        </div>
     </body>
+    <% } %>
 </html>
+

@@ -72,13 +72,16 @@ public class registrarImagen extends HttpServlet {
                    if (insertID > 0) {
                        boolean savedImage = insert_image_to_disk(filePart, title, insertID.toString());
                        if(savedImage){
+                           ConnectDB.close_connection(connection);
                            session.setAttribute("successMessage", "Image was uploaded correctly!");
                            session.setAttribute("isImage", true);
+                           session.setAttribute("imageID", insertID);
                            session.setAttribute("origin","Menu");
-                           response.sendRedirect("successOperation.jsp");
+                           response.sendRedirect("success.jsp");
                        }
                        else{
                            OperationsDB.delete_image(insertID, connection);
+                           ConnectDB.close_connection(connection);
                            session.setAttribute("errorMessage", "Error saving image");
                            session.setAttribute("origin","Menu");
                            response.sendRedirect("error.jsp");
@@ -86,13 +89,15 @@ public class registrarImagen extends HttpServlet {
                        
                    }
                    else {
+                       ConnectDB.close_connection(connection);
                        session.setAttribute("errorMessage", "Error uploading the image");
                        session.setAttribute("origin","Menu");
                        response.sendRedirect("error.jsp");
                    }
-                   ConnectDB.close_connection(connection);
+                   
             }
             else{
+                ConnectDB.close_connection(connection);
                 session.setAttribute("errorMessage", "No field can be left empty");
                 session.setAttribute("origin","Menu");
                 response.sendRedirect("error.jsp");
@@ -143,6 +148,7 @@ public class registrarImagen extends HttpServlet {
         return "Short description";
     }// </editor-fold
 
+    
     private boolean insert_image_to_disk(Part filePart, String title, String uid){
         try{
             File path = new File("/var/webapp/imageDB");

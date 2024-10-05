@@ -27,7 +27,7 @@
             <h1>GALLERY</h1>
             <div class ="gallery">
                 <%
-                    List<String[]> gallery = OperationsDB.getAllImages();
+                    List<String[]> gallery = OperationsDB.get_all_images();
                     int total = gallery.size();
                      
                     for(int i = 0; i < total; ++i) {

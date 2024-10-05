@@ -9,12 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Success Page</title>
+        <title>Success</title>
     </head>
     <body>
         <div class = "wrapper">
             <h1>The operation was successfully!</h1>
-            <h3>Success: <% out.println((String)session.getAttribute("successMessage"));%></h3>
+            <h3>Success: <% out.println((String)session.getAttribute("successMessage"));%></h3 
             <br>
             <% 
                 if(session.getAttribute("origin") == "Menu"){ %>
