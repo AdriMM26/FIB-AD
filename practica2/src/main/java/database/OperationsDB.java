@@ -54,6 +54,7 @@ public class OperationsDB {
             statement.setString(2, password);
             
             statement.executeUpdate();
+            
             return 1;
         } catch(SQLException e){
             System.err.println(e.getMessage());
@@ -79,7 +80,7 @@ public class OperationsDB {
             statement.setString(8, filename);
             
             statement.executeUpdate();
-            
+                    
             return get_max_id(connection);
             
         } catch (SQLException ex) {
@@ -89,18 +90,43 @@ public class OperationsDB {
     
     public static void delete_image(String insertID, Connection connection){
         try{
-            String query = "DELETE From IMAGE where ID=?";
+            String query = "delete from image where id=?";
             PreparedStatement statement = connection.prepareStatement(query);
         
             /* set the correct values */
             statement.setString(1, insertID);
             statement.executeUpdate();
             
+            
         } catch (SQLException ex) {
             Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static boolean modify_image(String insertID, String title, String description, String keywords, String author, String creationDate, Connection connection) {
+        try {
+            
+            String query = "update image set title =?, description =?, keywords =?, author =?, capture_date =? where id =?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(1, title);
+            statement.setString(2,description);
+            statement.setString(3, keywords);
+            statement.setString(4, author);
+            statement.setString(5, creationDate);
+            statement.setString(6, insertID);
+            
+            statement.executeUpdate();
+            
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
       
+    
     public static List<String[]> get_all_images() {
         try {
          /* Open connection */
@@ -108,7 +134,7 @@ public class OperationsDB {
 
         List<String[]> images = new ArrayList<>();
 
-        String query = "SELECT * FROM IMAGE";
+        String query = "select * from image";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet rs = statement.executeQuery();
 
@@ -117,7 +143,6 @@ public class OperationsDB {
           for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }
           images.add(imageInfo);
         }
-        ConnectDB.close_connection(connection);
 
         return images;
            
@@ -134,27 +159,27 @@ public class OperationsDB {
             List<String[]> images = new ArrayList<>();
             List<Object> values = new ArrayList<>();
             
-            String query = "SELECT * FROM IMAGE WHERE 1=1";
+            String query = "select * from image where 1=1";
             PreparedStatement statement;
             
             if(!title.isBlank()) {
-                query += " AND TITLE LIKE ?";
+                query += " and title like ?";
                 values.add("%" + title + "%");
             }
             if(!description.isBlank()) {
-                query += " AND DESCRIPTION LIKE ?";
+                query += " and description like ?";
                 values.add( "%" + description + "%");
             }
             if(!keywords.isBlank()) {
-                query += " AND KEYWORDS LIKE ?";
+                query += " and keywords like ?";
                 values.add("%" + keywords + "%");
             }
             if(!author.isBlank()) {
-                query += " AND AUTHOR LIKE ?";
+                query += " and author like ?";
                 values.add("%" + author + "%");
             }
             if(!creationDate.isBlank()) {
-                query += " AND CAPTURE_DATE LIKE ?";
+                query += " and capture_date like ?";
                 values.add("%" + creationDate + "%");
             }
             
@@ -169,8 +194,6 @@ public class OperationsDB {
                 for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }
                 images.add(imageInfo);
             }
-            
-            ConnectDB.close_connection(connection);
 
             return images;
             
@@ -182,7 +205,7 @@ public class OperationsDB {
     
     private static int get_max_id(Connection connection) {
         try{
-            String query = "SELECT MAX(ID) From IMAGE";
+            String query = "select max(id) from image";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             int id;

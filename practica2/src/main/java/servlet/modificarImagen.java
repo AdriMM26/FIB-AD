@@ -4,13 +4,19 @@
  */
 package servlet;
 
+import database.ConnectDB;
+import database.OperationsDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.File;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,17 +37,57 @@ public class modificarImagen extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet modificarImagen</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet modificarImagen at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        HttpSession session = request.getSession(false);
+        if(session == null || request.getContentType()==null) 
+        {
+            session = request.getSession(true);
+            session.setAttribute("errorMessage", "Invalid session");
+            response.sendRedirect("error.jsp");   
+        }
+        else {
+            try {
+            /*Open a connection with DB */
+            Connection connection = ConnectDB.open_connection();
+ 
+            /* Get data from input box */
+            String id = request.getParameter("id");
+            String oldTitle = request.getParameter("otitle");
+            String title = request.getParameter("title");
+            String description = request.getParameter("descp");
+            String keywords = request.getParameter("keyw");
+            String author = request.getParameter("ath");
+            String creationDate = request.getParameter("cdate");
+            
+            String oldImageName = oldTitle+"_"+id;
+            String newImageName = title+"_"+id;
+                 
+            Boolean updated = OperationsDB.modify_image(id, title, description, keywords, author, creationDate, connection);
+            if (updated) {
+                File oldfile = new File("/var/webapp/imageDB/" + oldImageName);
+                File newfile = new File("/var/webapp/imageDB/" + newImageName);
+                if(oldfile.renameTo(newfile)) {
+                    session.setAttribute("successMessage", "Image updated");
+                    session.setAttribute("origin","Menu");
+                    response.sendRedirect("success.jsp");
+                }
+                else {
+                    Boolean aux = OperationsDB.modify_image(id, oldTitle, description, keywords, author, creationDate, connection);
+                    session.setAttribute("errorMessage", "Error updating the image title, try again");
+                    session.setAttribute("origin","Menu");
+                    response.sendRedirect("error.jsp");
+                }
+            }
+            else {
+                session.setAttribute("errorMessage", "Error updating the image, try again");
+                session.setAttribute("origin","Menu");
+                response.sendRedirect("error.jsp");
+            }     
+            ConnectDB.close_connection(connection);
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+          }
         }
     }
 

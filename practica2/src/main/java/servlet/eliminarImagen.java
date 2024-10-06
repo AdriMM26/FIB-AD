@@ -43,17 +43,17 @@ public class eliminarImagen extends HttpServlet {
         {
             session = request.getSession(true);
             session.setAttribute("errorMessage", "Invalid session");
-            response.sendRedirect("error.jsp"); 
-            
+            response.sendRedirect("error.jsp");     
         }
-        else{
+        else
+        {
             try {
             /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
             
             /* Get data from input box */
             String title = request.getParameter("title");
-            String id = session.getAttribute("usedID").toString();
+            String id = request.getParameter("id");
             
             // Get the file name or path from the request (e.g., image file name)
             String imageName = title+"_"+id;
@@ -66,7 +66,6 @@ public class eliminarImagen extends HttpServlet {
                 if (file.delete()) {
                     // File deleted successfully
                     session.setAttribute("successMessage", "Image was deleted correctly!");
-                    session.removeAttribute("usedID");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("success.jsp");
                 } else {
@@ -84,8 +83,6 @@ public class eliminarImagen extends HttpServlet {
             
             OperationsDB.delete_image(id, connection);
             
-            
-           
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
