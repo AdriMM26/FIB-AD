@@ -9,11 +9,11 @@
     * [X] Success Page
     * [X] ConnectDB
     * [X] Menú
-    * [ ] BuscarImagen
-    * [ ] ModificarImagen
+    * [X] BuscarImagen
+    * [X] ModificarImagen
     * [X] RegistrarImagen
     * [ ] EliminarImagen (afegir comprovació de ROWS)
-    * [ ] Operacions DB
-    * [ ] Documentar
-    * [ ] **Añadir** ListarImagen
-    * [ ] CSS
+    * [X] Operacions DB
+    * [ ] **Documentar**
+    * [X] ListarImagen
+    * [ ] **CSS**
