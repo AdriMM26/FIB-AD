@@ -20,11 +20,12 @@
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
         <title>Images</title>
     </head>
     <body>
         <div class="wrapper">
-            <h1>GALLERY</h1>
+            <h1>Gallery</h1>
             <div class ="gallery">
                 <%
                     List<String[]> gallery = OperationsDB.get_all_images();

@@ -30,11 +30,12 @@
     </script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
         <title>Images</title>
     </head>
     <body>
         <div class="wrapper">
-            <h1>SEARCH IN GALLERY</h1>
+            <h1>Search in Gallery</h1>
             <div class = "filter">
                 <form action="buscarImagen" method = "POST">
                     <div class="input-box">
