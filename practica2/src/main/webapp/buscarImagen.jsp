@@ -36,6 +36,7 @@
     <body>
         <div class="wrapper">
             <h1>Search in Gallery</h1>
+            <button-back type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button-back>
             <div class = "filter">
                 <form action="buscarImagen" method = "POST">
                     <div class="input-box">
