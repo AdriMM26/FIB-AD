@@ -28,7 +28,7 @@
     <body>
         <div class="wrapper">
             <h1>Modify image</h1>
-            <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button>
+            <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">GO TO MENU</button>
             <% out.println("<h2>Please, enter the new values for " + title + "</h2>"); %>
             <div class< = "filer">
                 <form action="modificarImagen" method = "POST">

@@ -23,7 +23,7 @@
     </head>
     <body>
         <h1>Delete image</h1>
-        <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button>
+        <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">GO TO MENU</button>
         <h2>Are you sure you want to delete the image titled: <% out.println(title); %> ?</h2>
         <%out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + title + "_" + id + "\" alt=\"Image not found\"/></div>");%>
         <div class="btn">
