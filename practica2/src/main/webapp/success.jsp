@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class = "wrapper">
-            <h1>The operation was successfully!</h1>
+            <h1>The operation was successfull!</h1>
             <h3>Success: <% out.println((String)session.getAttribute("successMessage"));%></h3 
             <br>
             <% 

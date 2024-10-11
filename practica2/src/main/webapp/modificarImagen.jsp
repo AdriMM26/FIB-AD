@@ -26,8 +26,11 @@
         <title>Modify Image</title>
     </head>
     <body>
-        <% out.println("<h1>Please, enter the new values for " + title + "</h1>"); %>
-        <div class = "filer">
+        <div class="wrapper">
+            <h1>Modify image</h1>
+            <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button>
+            <% out.println("<h2>Please, enter the new values for " + title + "</h2>"); %>
+            <div class< = "filer">
                 <form action="modificarImagen" method = "POST">
                     <div class="input-hidden-box">
                         <% out.println("<input type=\"text\" name=\"id\" value =\""+id+"\" hidden>");%>
@@ -49,11 +52,12 @@
                         <% out.println("<input type=\"date\" name=\"cdate\" value=\""+cdate+"\">");%>
                     </div>
                     <div class="btn">
-                        <button type="submit">Modify</button>
+                        <button class="button-personalized" type="submit">Modify</button>
                     </div>
                     <br>
                 </form>
             </div>
+        </div>
     </body>
     <% } %>
 </html>

@@ -26,6 +26,7 @@
     <body>
         <div class="wrapper">
             <h1>Gallery</h1>
+            <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button>
             <div class ="gallery">
                 <%
                     List<String[]> gallery = OperationsDB.get_all_images();
