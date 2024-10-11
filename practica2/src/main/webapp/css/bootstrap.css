@@ -27,13 +27,15 @@ h1 {
 
 div {
     padding: 10px 0;
+    text-align: center;
+    align-content: center;
 }
 
-button-back {
+.button-personalized {
   background-color: #04AA6D; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 12px;
   text-align: right;
   margin: auto;
   text-decoration: none;
@@ -42,6 +44,39 @@ button-back {
   transition-duration: 0.4s;
 }
 
-button-back:hover {
+.button-personalized:hover {
   background-color: #023020; /* Dark green */
 }
+
+.button-back {
+    position: fixed;
+    top: 10px; /* Distance from the top of the page */
+    right: 10px; /* Distance from the right side of the page */
+    z-index: 1000; /* Make sure it stays on top of other elements */
+    padding: 10px 20px; /* Adjust padding as needed */
+    background-color: #007BFF; /* Button color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button-back:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+.image-container {
+    display: table;
+    width: 100%; /* Full-width container */
+    text-align: center; /* Centers images horizontally */
+    vertical-align: middle; /* Vertically centers content */
+}
+
+.image-container img {
+    display: inline-block; /* Ensures images are treated like inline elements */
+    max-width: 500px;
+    height: auto;
+    object-fit: contain;
+}
+

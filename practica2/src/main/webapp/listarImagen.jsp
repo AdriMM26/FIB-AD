@@ -33,8 +33,7 @@
                      
                     for(int i = 0; i < total; ++i) {
                         String [] imageInfo = gallery.get(i);
-                        out.println(imageInfo[1]);
-                        out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> </div>");
+                        out.println("<div class=\"image-container\"> <h3>"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> </div>");
                     }
                 %>
             </div>

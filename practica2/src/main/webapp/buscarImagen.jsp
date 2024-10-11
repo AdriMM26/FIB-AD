@@ -36,7 +36,7 @@
     <body>
         <div class="wrapper">
             <h1>Search in Gallery</h1>
-            <button-back type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button-back>
+            <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button>
             <div class = "filter">
                 <form action="buscarImagen" method = "POST">
                     <div class="input-box">
@@ -55,7 +55,7 @@
                         <input type="date" name="cdate" placeholder="Creation date">
                     </div>
                     <div class="btn">
-                        <button type="submit">Search</button>
+                        <button class="button-personalized" type="submit">Search</button>
                     </div>
                     <br>
                 </form>
@@ -69,16 +69,15 @@
                          
                         for(int i = 0; i < total; ++i) {
                             String [] imageInfo = gallery.get(i);
-                            out.println(imageInfo[1]);
                             if(imageInfo[5].equals(username)) {
-                                out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
+                                out.println("<div class=\"image-container\"> <h3>"+imageInfo[1]+"</h3><img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
                                 out.println("<br>");
                                 out.println("<button onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
                                 out.println("<button onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"')\">Delete</button>");
                                 out.println("<br> </div>");   
                             }
                             else  {
-                                out.println("<div class=\"image\"> <img src=\"http://localhost:8080/practica2/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/>");
+                                out.println("<div class=\"image-container\"> <img src=\"http://localhost:8080/practica2/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/>");
                                 out.println("<br> </div>");
                             }
                         }
