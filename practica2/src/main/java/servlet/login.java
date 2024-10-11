@@ -36,19 +36,15 @@ public class login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             
-            /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
             
-            /*Get session */
             HttpSession session = request.getSession();
             
-            /* Get data from input box */
             String username = request.getParameter("uname");
             String password = request.getParameter("pw");
             
             boolean existUser = OperationsDB.check_user(username, password, connection);
             
-            /* Manage session with HttpSession */
             if(existUser)  {
                 session.setAttribute("username", username);
                 response.sendRedirect("menu.jsp");

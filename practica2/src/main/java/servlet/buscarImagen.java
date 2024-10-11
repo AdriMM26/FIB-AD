@@ -3,10 +3,8 @@ package servlet;
 import database.ConnectDB;
 import database.OperationsDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,10 +45,8 @@ public class buscarImagen extends HttpServlet {
         }
         else {
             try {
-            /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
  
-            /* Get data from input box */
             String title = request.getParameter("title");
             String description = request.getParameter("descp");
             String keywords = request.getParameter("keyw");

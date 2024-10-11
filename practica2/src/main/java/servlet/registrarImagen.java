@@ -4,7 +4,6 @@ import database.ConnectDB;
 import database.OperationsDB;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -53,10 +52,8 @@ public class registrarImagen extends HttpServlet {
         }
         else{
             try {
-            /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
             
-            /* Get data from input box */
             String title = request.getParameter("title");
             String description = request.getParameter("descp");
             String keywords = request.getParameter("keyw");
@@ -64,7 +61,6 @@ public class registrarImagen extends HttpServlet {
             String creator = session.getAttribute("username").toString();
             String creationDate = request.getParameter("cdate");
             String uploadDate = LocalDate.now().toString();
-            /* Esta clase representa una parte o elemento de formulario que se recibió dentro de una solicitud POST con multipart/form-data. */
             Part filePart = request.getPart("file");
             
             if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && uploadDate != null && filePart != null) {

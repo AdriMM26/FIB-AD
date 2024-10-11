@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package database;
 
 import java.sql.Connection;
@@ -22,18 +18,15 @@ import java.util.List;
  * @author alumne
  */
 public class OperationsDB {
-     /* Return true if user {username, password} exists in DB, false otherwise */
+    
     public static boolean check_user (String username, String password, Connection connection){
         try{
             String query = "select * from usuarios where id_usuario=? and password=?";
-            /* Prepare: An SQL statement template is created and sent to the database. Certain values are left unspecified, called parameters (labeled "?") */
             PreparedStatement statement = connection.prepareStatement(query);
             
-            /* set the correct values */
             statement.setString(1, username);
             statement.setString(2, password);
             
-            /* Execute the query */
             ResultSet rs = statement.executeQuery();
             
             return rs.next();
@@ -46,10 +39,8 @@ public class OperationsDB {
     public static int register_user (String username, String password, Connection connection) {
         try{
             String query = "insert into usuarios(id_usuario, password) values (?,?)";
-            /* Prepare: An SQL statement template is created and sent to the database. Certain values are left unspecified, called parameters (labeled "?") */
             PreparedStatement statement = connection.prepareStatement(query);
         
-            /* set the correct values */
             statement.setString(1, username);
             statement.setString(2, password);
             
@@ -93,7 +84,6 @@ public class OperationsDB {
             String query = "delete from image where id=?";
             PreparedStatement statement = connection.prepareStatement(query);
         
-            /* set the correct values */
             statement.setString(1, insertID);
             statement.executeUpdate();
             
@@ -129,7 +119,6 @@ public class OperationsDB {
     
     public static List<String[]> get_all_images() {
         try {
-         /* Open connection */
         Connection connection = ConnectDB.open_connection();
 
         List<String[]> images = new ArrayList<>();

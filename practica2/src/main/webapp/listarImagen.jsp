@@ -21,12 +21,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-        <title>Images</title>
+        <title>Images Gallery</title>
     </head>
     <body>
         <div class="wrapper">
             <h1>Gallery</h1>
-            <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">Go back to MENU</button>
+            <button class="button-logout" type="button" onclick="window.location.href='login.jsp'">LOG OUT</button>
+            <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">GO TO MENU</button>
             <div class ="gallery">
                 <%
                     List<String[]> gallery = OperationsDB.get_all_images();
@@ -39,6 +40,9 @@
                 %>
             </div>
         </div>
+        <footer>
+            <p>&copy; 2024 Javier & Adrià @ AD Q1-2425</p>
+        </footer>
     </body>
     <% } %>
 </html>

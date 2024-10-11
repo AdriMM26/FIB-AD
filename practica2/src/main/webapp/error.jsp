@@ -24,5 +24,8 @@
                 else { %> <a class="ref" href="login.jsp">Go to Login</a> <% 
                 } %>            
         </div>
+        <footer>
+            <p>&copy; 2024 Javier & Adrià @ AD Q1-2425</p>
+        </footer>
     </body>
 </html>
