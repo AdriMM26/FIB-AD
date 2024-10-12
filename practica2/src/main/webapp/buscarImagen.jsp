@@ -19,12 +19,63 @@
         else {
     %>
     <script>
-    function modifyImage(id, title, descp, keyw, auth, cdate) {
-        window.location.href = "modificarImagen.jsp?title=" + encodeURIComponent(title) + "&id=" + encodeURIComponent(id)  + "&descp=" + encodeURIComponent(descp)
-                                + "&keyw=" + encodeURIComponent(keyw) + "&auth=" + encodeURIComponent(auth)  + "&cdate=" + encodeURIComponent(cdate);
+    function modifyImage(id, title, creator, descp, keyw, auth, cdate) {
+        // Create a form dynamically
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'modificarImagen.jsp'; // The JSP that handles the deletion
+
+        // Add hidden fields for all variables
+        const inputId = document.createElement('input');
+        inputId.type = 'hidden';
+        inputId.name = 'id';
+        inputId.value = id;
+
+        const inputTitle = document.createElement('input');
+        inputTitle.type = 'hidden';
+        inputTitle.name = 'title';
+        inputTitle.value = title;
+
+        const inputCreator = document.createElement('input');
+        inputCreator.type = 'hidden';
+        inputCreator.name = 'creator';
+        inputCreator.value = creator;
+        
+        const inputDesc = document.createElement('input');
+        inputDesc.type = 'hidden';
+        inputDesc.name = 'descp';
+        inputDesc.value = descp;
+        
+        const inputKeyw = document.createElement('input');
+        inputKeyw.type = 'hidden';
+        inputKeyw.name = 'keyw';
+        inputKeyw.value = keyw;
+        
+        const inputAuth = document.createElement('input');
+        inputAuth.type = 'hidden';
+        inputAuth.name = 'auth';
+        inputAuth.value = auth;
+        
+        const inputDate = document.createElement('input');
+        inputDate.type = 'hidden';
+        inputDate.name = 'cdate';
+        inputDate.value = cdate;
+
+        // Append inputs to the form
+        form.appendChild(inputId);
+        form.appendChild(inputTitle);
+        form.appendChild(inputCreator);
+        form.appendChild(inputDesc);
+        form.appendChild(inputKeyw);
+        form.appendChild(inputAuth);
+        form.appendChild(inputDate);
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
     };
     function deleteImage(id, title, creator) {
-         // Create a form dynamically
+        // Create a form dynamically
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = 'eliminarImagen.jsp'; // The JSP that handles the deletion
@@ -102,7 +153,7 @@
                                 out.println("<div class=\"image-container\"> <h3>"+imageInfo[1]+"</h3><img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
                                 out.println("<br>");
                                 
-                                out.println("<button onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
+                                out.println("<button onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
                                 out.println("<button onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"')\">Delete</button>");
                                 out.println("<br> </div>");   
                             }

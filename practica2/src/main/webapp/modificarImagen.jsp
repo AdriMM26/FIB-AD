@@ -15,10 +15,18 @@
         else {
             String title = request.getParameter("title");
             String id = request.getParameter("id");
-            String auth = request.getParameter("auth");
-            String descp = request.getParameter("descp");
-            String keyw = request.getParameter("keyw");
-            String cdate = request.getParameter("cdate");
+            String creator = request.getParameter("creator");
+            //session.removeAttribute("creator");
+            String realUser = (String)session.getAttribute("username");
+            if(!creator.equals(realUser)){
+                session.setAttribute("errorMessage", "You are NOT the author");
+                response.sendRedirect("error.jsp");
+            }
+            else{
+                String auth = request.getParameter("auth");
+                String descp = request.getParameter("descp");
+                String keyw = request.getParameter("keyw");
+                String cdate = request.getParameter("cdate");
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -62,5 +70,5 @@
             <p>&copy; 2024 Javier & Adrià @ AD Q1-2425</p>
         </footer>
     </body>
-    <% } %>
+    <% } } %>
 </html>
