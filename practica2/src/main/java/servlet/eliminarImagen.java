@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package servlet;
 
 import database.ConnectDB;
@@ -45,39 +41,27 @@ public class eliminarImagen extends HttpServlet {
             session.setAttribute("errorMessage", "Invalid session");
             response.sendRedirect("error.jsp");     
         }
-        else
-        {
+        else {
             try {
-            /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
-            
             String id = request.getParameter("id");
             String title = request.getParameter("title");
             
-            // Get the file name or path from the request (e.g., image file name)
             String imageName = title+"_"+id;
 
-            // Create a File object with the full path
             File file = new File("/var/webapp/imageDB/" + imageName);
 
-            // Check if file exists and delete it
             if (file.exists()) {
                 if (file.delete()) {
-                    // File deleted successfully
-                    session.removeAttribute(id);
-                    session.removeAttribute(title);
-                    session.removeAttribute((String)session.getAttribute("creator"));
                     session.setAttribute("successMessage", "Image was deleted correctly!");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("success.jsp");
                 } else {
-                    // Failed to delete file
                     session.setAttribute("errorMessage", "Error deleting image");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("error.jsp");
                 }
             } else {
-                // File does not exist
                 session.setAttribute("errorMessage", "File not found");
                 session.setAttribute("origin","Menu");
                 response.sendRedirect("error.jsp");

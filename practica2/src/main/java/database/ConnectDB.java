@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package database;
 
 import java.sql.Connection;
@@ -18,7 +14,6 @@ public class ConnectDB {
         try{
             Class.forName("org.apache.derby.jdbc.ClientDriver");
 
-            // create a database connection
             connection = DriverManager.getConnection("jdbc:derby://localhost:1527/pr2;user=pr2;password=pr2");
         }catch(SQLException e){
             System.err.print(e.getMessage());

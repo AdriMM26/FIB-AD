@@ -17,11 +17,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-        <title>Home Menu</title>
+        <title>Home</title>
     </head>
     <body>
         <div class="wrapper">
             <h1>Welcome <% out.println((String)session.getAttribute("username"));%></h1>
+            <button class="button-logout" type="button" onclick="window.location.href='login.jsp'">LOG OUT</button>
             <div class="card">
                 <h3> <a href="buscarImagen.jsp">Search an Image</a> </h3>
             </div>
@@ -32,6 +33,9 @@
                 <h3> <a href="registrarImagen.jsp">Register an Image</a> </h3>
             </div>
         </div>
+        <footer>
+            <p>&copy; 2024 Javier & Adrià @ AD Q1-2425</p>
+        </footer>
     </body>
     <% } %>
 </html>

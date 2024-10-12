@@ -36,10 +36,8 @@ public class register extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
             
-            /* Get data from input box */
             String username = request.getParameter("uname");
             String password = request.getParameter("pw");
             

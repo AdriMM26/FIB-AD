@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package servlet;
 
 import database.ConnectDB;
@@ -47,10 +43,8 @@ public class modificarImagen extends HttpServlet {
         }
         else {
             try {
-            /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
  
-            /* Get data from input box */
             String id = request.getParameter("id");
             String oldTitle = request.getParameter("otitle");
             String title = request.getParameter("title");
