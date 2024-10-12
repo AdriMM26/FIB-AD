@@ -51,9 +51,8 @@ public class eliminarImagen extends HttpServlet {
             /*Open a connection with DB */
             Connection connection = ConnectDB.open_connection();
             
-            /* Get data from input box */
-            String title = request.getParameter("title");
             String id = request.getParameter("id");
+            String title = request.getParameter("title");
             
             // Get the file name or path from the request (e.g., image file name)
             String imageName = title+"_"+id;
@@ -65,6 +64,9 @@ public class eliminarImagen extends HttpServlet {
             if (file.exists()) {
                 if (file.delete()) {
                     // File deleted successfully
+                    session.removeAttribute(id);
+                    session.removeAttribute(title);
+                    session.removeAttribute((String)session.getAttribute("creator"));
                     session.setAttribute("successMessage", "Image was deleted correctly!");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("success.jsp");

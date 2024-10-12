@@ -23,8 +23,36 @@
         window.location.href = "modificarImagen.jsp?title=" + encodeURIComponent(title) + "&id=" + encodeURIComponent(id)  + "&descp=" + encodeURIComponent(descp)
                                 + "&keyw=" + encodeURIComponent(keyw) + "&auth=" + encodeURIComponent(auth)  + "&cdate=" + encodeURIComponent(cdate);
     };
-    function deleteImage(id, title) {
-       window.location.href = "eliminarImagen.jsp?title=" + encodeURIComponent(title) + "&id=" + encodeURIComponent(id);
+    function deleteImage(id, title, creator) {
+         // Create a form dynamically
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'eliminarImagen.jsp'; // The JSP that handles the deletion
+
+        // Add hidden fields for id, title, and creator
+        const inputId = document.createElement('input');
+        inputId.type = 'hidden';
+        inputId.name = 'id';
+        inputId.value = id;
+
+        const inputTitle = document.createElement('input');
+        inputTitle.type = 'hidden';
+        inputTitle.name = 'title';
+        inputTitle.value = title;
+
+        const inputCreator = document.createElement('input');
+        inputCreator.type = 'hidden';
+        inputCreator.name = 'creator';
+        inputCreator.value = creator;
+
+        // Append inputs to the form
+        form.appendChild(inputId);
+        form.appendChild(inputTitle);
+        form.appendChild(inputCreator);
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
     };
     
     </script>
@@ -72,12 +100,13 @@
                             if(imageInfo[5].equals(username)) {
                                 out.println("<div class=\"image-container\"> <h3>"+imageInfo[1]+"</h3><img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
                                 out.println("<br>");
+                                
                                 out.println("<button onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
-                                out.println("<button onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"')\">Delete</button>");
+                                out.println("<button onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"')\">Delete</button>");
                                 out.println("<br> </div>");   
                             }
                             else  {
-                                out.println("<div class=\"image-container\"> <img src=\"http://localhost:8080/practica2/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/>");
+                                out.println("<div class=\"image-container\"> <h3>"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/practica2/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/>");
                                 out.println("<br> </div>");
                             }
                         }
