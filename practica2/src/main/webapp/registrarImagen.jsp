@@ -23,7 +23,7 @@
    <body>
         <div class="wrapper">
             <h1>Upload an Image</h1>
-            <button class="button-logout" type="button" onclick="window.location.href='login.jsp'">LOG OUT</button>
+            <button class="button-logout" type="button" onclick="window.location.href='logout.jsp'">LOG OUT</button>
             <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">GO TO MENU</button>
             <!-- Es necesario añadir enctype="multipart/form-data" para poder subir archivos-->
             <form action="registrarImagen" method = "POST" enctype="multipart/form-data">

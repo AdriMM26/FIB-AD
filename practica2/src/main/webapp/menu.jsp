@@ -22,7 +22,7 @@
     <body>
         <div class="wrapper">
             <h1>Welcome <% out.println((String)session.getAttribute("username"));%></h1>
-            <button class="button-logout" type="button" onclick="window.location.href='login.jsp'">LOG OUT</button>
+            <button class="button-logout" type="button" onclick="window.location.href='logout.jsp'">LOG OUT</button>
             <div class="card">
                 <h3> <a href="buscarImagen.jsp">Search an Image</a> </h3>
             </div>
