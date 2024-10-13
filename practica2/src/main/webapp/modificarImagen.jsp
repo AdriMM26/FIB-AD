@@ -45,22 +45,22 @@
                         <% out.println("<input type=\"text\" name=\"otitle\" value =\""+title+"\" hidden>");%>
                     </div> 
                     <div class="input-box">
-                        <% out.println("<input type=\"text\" name=\"title\" placeholder=\"New title\" value=\""+title+"\">");%>
+                        <% out.println("<input type=\"text\" class=\"input-field\" name=\"title\" placeholder=\"New title\" value=\""+title+"\">");%>
                     </div> 
                     <div class="input-box">
-                        <% out.println("<input type=\"text\" name=\"descp\" placeholder=\"New description\" value=\""+descp+"\">");%>
+                        <% out.println("<input type=\"text\" class=\"input-field\" name=\"descp\" placeholder=\"New description\" value=\""+descp+"\">");%>
                     </div>
                     <div class="input-box">
-                        <% out.println("<input type=\"text\" name=\"keyw\" placeholder=\"New keywords\" value=\""+keyw+"\">");%>
+                        <% out.println("<input type=\"text\" class=\"input-field\" name=\"keyw\" placeholder=\"New keywords\" value=\""+keyw+"\">");%>
                     </div>
                     <div class="input-box">
-                        <% out.println("<input type=\"text\" name=\"ath\" placeholder=\"New author\" value=\""+auth+"\">");%>
+                        <% out.println("<input type=\"text\" class=\"input-field\" name=\"ath\" placeholder=\"New author\" value=\""+auth+"\">");%>
                     </div>
                     <div class="input-box">
-                        <% out.println("<input type=\"date\" name=\"cdate\" value=\""+cdate+"\">");%>
+                        <% out.println("<input type=\"date\" class=\"input-field\" name=\"cdate\" value=\""+cdate+"\">");%>
                     </div>
                     <div class="btn">
-                        <button class="button-personalized" type="submit">Modify</button>
+                        <button class="button-personalized button-submit" type="submit">Modify</button>
                     </div>
                     <br>
                 </form>

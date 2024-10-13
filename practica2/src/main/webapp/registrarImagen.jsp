@@ -29,27 +29,27 @@
             <form action="registrarImagen" method = "POST" enctype="multipart/form-data">
                 <!-- Identificador de imagen, generado automaticamente (primary key) -->
                 <div class="input-box">
-                    <input type="text" name="title" placeholder="Image title" required>
+                    <input type="text" class="input-field" name="title" placeholder="Image title" required>
                 </div> 
                 <div class="input-box">
-                    <input type="text" name="descp" placeholder="Image description" required>
+                    <input type="text" class="input-field" name="descp" placeholder="Image description" required>
                 </div>
                 <div class="input-box">
-                    <input type="text" name="keyw" placeholder="Key words for the image" required>
+                    <input type="text" class="input-field" name="keyw" placeholder="Key words for the image" required>
                 </div>
                 <div class="input-box">
-                    <input type="text" name="ath" placeholder="Image author" required>
+                    <input type="text" class="input-field" name="ath" placeholder="Image author" required>
                 </div>
                 <!-- Creador (usuario que hace upload) -->
                 <div class="input-box">
-                    <input type="date" name="cdate" placeholder="Creation date" required>
+                    <input type="date" class="input-field" name="cdate" placeholder="Creation date" required>
                 </div>
                 <!-- Date of upload -->
                 <div class="selector">
-                    <input type="file" name="file" required/>
+                    <input class="input-field" type="file" name="file" required/>
                 </div>
                 <div class="btn">
-                    <button type="submit">Upload</button>
+                    <button class="button-personalized button-submit" type="submit">Upload</button>
                 </div>
             </form>
         </div>

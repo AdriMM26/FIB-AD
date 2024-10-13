@@ -35,8 +35,38 @@ div {
     align-content: center;
 }
 
+.title {
+    font-size: 36px;                  /* Large font size for emphasis */
+    font-weight: bold;                /* Bold text */
+    color: #333;                      /* Dark gray color */
+    text-align: center;               /* Center the title */
+    position: relative;               /* Required for the pseudo-element */
+    padding-bottom: 10px;             /* Spacing below the text */
+    margin-bottom: 20px;              /* Adds space below the title */
+}
+
+/* Adding a decorative underline */
+.title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 500px;                      /* Width of the underline */
+    height: 4px;                      /* Thickness of the underline */
+    background-color: black;        /* Green color for the underline */
+    border-radius: 5px;               /* Rounded edges */
+}
+
+.input-field {
+    width: 300px;     /* Adjust width */
+    height: 40px;     /* Adjust height */
+    padding: 5px;     /* Optional padding */
+    font-size: 14px;  /* Adjust font size */
+    margin-top: 10px; /* Adds space between h3 and input */
+}
+
 .button-personalized {
-  background-color: #04AA6D; /* Green */
   border: none;
   color: white;
   padding: 10px 12px;
@@ -48,15 +78,53 @@ div {
   transition-duration: 0.4s;
 }
 
-.button-personalized:hover {
-  background-color: #023020; /* Dark green */
+.button-accept {
+    background-color: #4CAF50; /* Green */
+}
+
+.button-accept:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.button-cancel {
+    background-color: #f44336; /* Red */
+}
+
+.button-cancel:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+/* Submit button with blue background */
+.button-submit {
+    background-color: #008CBA; /* Blue */
+}
+
+.button-submit:hover {
+    background-color: #007bb5; /* Darker blue on hover */
+}
+
+/* Modify button with orange background */
+.button-modify {
+    background-color: #FFA500; /* Orange */
+}
+
+.button-modify:hover {
+    background-color: #e69500; /* Darker orange on hover */
+}
+
+/* Delete button with red background */
+.button-delete {
+    background-color: #f44336; /* Red */
+}
+
+.button-delete:hover {
+    background-color: #d32f2f; /* Darker red on hover */
 }
 
 .button-logout {
     position: fixed;
     top: 10px; /* Distance from the top of the page */
     left: 20px; /* Distance from the left side of the page */
-    z-index: 2000; /* Make sure it stays on top of other elements */
+    z-index: 1000; /* Make sure it stays on top of other elements */
     padding: 10px 20px; /* Adjust padding as needed */
     background-color: #007BFF; /* Button color */
     color: white; /* Text color */
@@ -64,6 +132,10 @@ div {
     border-radius: 5px; /* Rounded corners */
     cursor: pointer;
     font-size: 16px;
+}
+
+.button-logout:hover {
+    background-color: #0056b3; /* Darker color on hover */
 }
 
 .button-back {
@@ -80,6 +152,11 @@ div {
     font-size: 16px;
 }
 
+.button-display {
+    display: inline;
+    padding: 20px;
+}
+
 .button-back:hover {
     background-color: #0056b3; /* Darker color on hover */
 }
@@ -89,6 +166,10 @@ div {
     width: 100%; /* Full-width container */
     text-align: center; /* Centers images horizontally */
     vertical-align: middle; /* Vertically centers content */
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 10px;
+    margin: 15px;
 }
 
 .image-container img {

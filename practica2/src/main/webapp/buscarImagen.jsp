@@ -120,22 +120,22 @@
             <div class = "filter">
                 <form action="buscarImagen" method = "POST">
                     <div class="input-box">
-                    <input type="text" name="title" placeholder="Image title">
+                    <input type="text" class="input-field" name="title" placeholder="Image title">
                     </div> 
                     <div class="input-box">
-                        <input type="text" name="descp" placeholder="Image description">
+                        <input type="text" class="input-field" name="descp" placeholder="Image description">
                     </div>
                     <div class="input-box">
-                        <input type="text" name="keyw" placeholder="Image keywords">
+                        <input type="text" class="input-field" name="keyw" placeholder="Image keywords">
                     </div>
                     <div class="input-box">
-                        <input type="text" name="ath" placeholder="Image author">
+                        <input type="text" class="input-field" name="ath" placeholder="Image author">
                     </div>
                     <div class="input-box">
-                        <input type="date" name="cdate" placeholder="Creation date">
+                        <input type="date" class="input-field" name="cdate" placeholder="Creation date">
                     </div>
                     <div class="btn">
-                        <button class="button-personalized" type="submit">Search</button>
+                        <button class="button-personalized button-submit" type="submit">Search</button>
                     </div>
                     <br>
                 </form>
@@ -150,15 +150,16 @@
                         for(int i = 0; i < total; ++i) {
                             String [] imageInfo = gallery.get(i);
                             if(imageInfo[5].equals(username)) {
-                                out.println("<div class=\"image-container\"> <h3>"+imageInfo[1]+"</h3><img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3><img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/>");
                                 out.println("<br>");
-                                
-                                out.println("<button onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
-                                out.println("<button onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"')\">Delete</button>");
+                                out.println("<div class=\"button-display\">");
+                                out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
+                                out.println("<button class=\"button-personalized button-delete\" onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"')\">Delete</button>");
+                                out.println("</div>");
                                 out.println("<br> </div>");   
                             }
                             else  {
-                                out.println("<div class=\"image-container\"> <h3>"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/practica2/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/>");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/practica2/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/>");
                                 out.println("<br> </div>");
                             }
                         }

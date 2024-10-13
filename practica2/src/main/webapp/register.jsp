@@ -19,17 +19,17 @@
 
                 <div class="input-box">
                     <label>Username:</label>
-                    <input type="text" name="uname" placeholder="Write your username" required>
+                    <input type="text" class="input-field" name="uname" placeholder="Write your username" required>
                 </div>  
                 <div class="input-box">
                     <label>Password:</label>
-                    <input type="password" name="pw" placeholder="Write your password" required>
+                    <input type="password" class="input-field" name="pw" placeholder="Write your password" required>
                 </div>
                 <div class="input-box button">
-                    <input type="Submit" value="Register">
+                    <button class="button-personalized button-accept" type="Submit">Register</button>
                 </div>
                 <div class="text">
-                <h3>Have an account? <a href="login.jsp">Sign on</a> </h3> 
+                <h3>Have an account? <a href="login.jsp">Sign in</a> </h3> 
                 </div>
             </form>
         </div>

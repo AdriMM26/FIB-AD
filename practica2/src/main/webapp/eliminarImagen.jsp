@@ -37,14 +37,17 @@
         <%out.println("<div class=\"image-container\"> <img src=\"http://localhost:8080/practica2/imageDB/" + title + "_" + id + "\" alt=\"Image not found\"/></div>");%>
         <div class="btn">
             <form action="eliminarImagen" method="POST">
-               <%
-               out.println("<input name = \"title\" type=\"text\" value =\""+title+"\" hidden/>");
-               out.println("<input name = \"id\" type=\"text\" value =\""+id+"\"hidden/>");
-               out.println("<button type=\"submit\">Accept</button>");
-               %>
+               <div class="button-display">
+                   <%
+                    out.println("<input name = \"title\" type=\"text\" value =\""+title+"\" hidden/>");
+                    out.println("<input name = \"id\" type=\"text\" value =\""+id+"\"hidden/>");
+                    out.println("<button class=\"button-personalized button-accept\" type=\"submit\">Accept</button>");
+                    %>
+                    <button type="button" class="button-personalized button-cancel" onclick="window.location.href='buscarImagen.jsp'">Cancel</button>
+               </div>
             </form>
       
-            <button type="button" onclick="window.location.href='buscarImagen.jsp'">Cancel</button>
+            
         </div>
         <footer>
             <p>&copy; 2024 Javier & Adrià @ AD Q1-2425</p>

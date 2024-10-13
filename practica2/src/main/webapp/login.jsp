@@ -18,13 +18,13 @@
             <form action="login" method = "POST">
                 
                 <div class="input-box">
-                    <input type="text" name="uname" placeholder="Write your username" required>
+                    <input type="text" class="input-field" name="uname" placeholder="Write your username" required>
                 </div>  
                 <div class="input-box">
-                    <input type="password" name="pw" placeholder="Write your password" required>
+                    <input type="password" class="input-field" name="pw" placeholder="Write your password" required>
                 </div>
                 <div class="input-box button">
-                    <input type="Submit" value="Login">
+                    <button type="submit"class="button-personalized button-accept">Login</button>
                 </div>
                 <div class="text">
                 <h3>Not registered yet? <a href="register.jsp">Sign Up</a> </h3> 
