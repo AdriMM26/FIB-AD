@@ -6,12 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    // Remove specific session attributes if necessary
-    session.removeAttribute("yourAttributeName"); // Replace 'yourAttributeName' with the actual session attribute you want to delete
-
-    // Invalidate the entire session to log out the user
+    session.removeAttribute("username");
     session.invalidate(); 
-    
-    // Redirect the user to the login page
     response.sendRedirect("login.jsp");
 %>

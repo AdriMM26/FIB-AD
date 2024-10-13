@@ -27,9 +27,6 @@
                 <h3> <a href="buscarImagen.jsp">Search an Image</a> </h3>
             </div>
             <div class="card">
-                <h3> <a href="listarImagen.jsp">List all Images</a></h3>
-            </div>
-            <div class="card">
                 <h3> <a href="registrarImagen.jsp">Register an Image</a> </h3>
             </div>
         </div>

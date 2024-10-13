@@ -115,32 +115,6 @@ public class OperationsDB {
             return false;
         }
     }
-      
-    
-    public static List<String[]> get_all_images() {
-        try {
-        Connection connection = ConnectDB.open_connection();
-
-        List<String[]> images = new ArrayList<>();
-
-        String query = "select * from image";
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet rs = statement.executeQuery();
-
-        while (rs.next()) {
-          String[] imageInfo = new String[9];
-          for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }
-          images.add(imageInfo);
-        }
-
-        return images;
-           
-        } catch (SQLException | ClassNotFoundException ex) {
-            System.err.println(ex.getMessage());
-            Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
     
     public static List<String[]> get_images(String title,String description,String keywords,String author,String creationDate,Connection connection) {
         try{
