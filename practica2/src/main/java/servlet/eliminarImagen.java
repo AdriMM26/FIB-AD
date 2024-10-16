@@ -68,6 +68,7 @@ public class eliminarImagen extends HttpServlet {
             }
             
             OperationsDB.delete_image(id, connection);
+            ConnectDB.close_connection(connection);
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);

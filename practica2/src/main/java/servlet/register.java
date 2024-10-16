@@ -43,6 +43,8 @@ public class register extends HttpServlet {
             
             int new_user = OperationsDB.register_user(username, password, connection);
             
+            ConnectDB.close_connection(connection);
+            
             HttpSession session = request.getSession();
             
             switch(new_user) {
