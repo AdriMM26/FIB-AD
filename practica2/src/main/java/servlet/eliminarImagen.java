@@ -52,6 +52,7 @@ public class eliminarImagen extends HttpServlet {
             File file = new File("/var/webapp/imageDB/" + imageName);
 
             if (file.exists()) {
+                OperationsDB.delete_image(id, connection);
                 if (file.delete()) {
                     session.setAttribute("successMessage", "Image was deleted correctly!");
                     session.setAttribute("origin","Menu");
@@ -67,7 +68,7 @@ public class eliminarImagen extends HttpServlet {
                 response.sendRedirect("error.jsp");
             }
             
-            OperationsDB.delete_image(id, connection);
+            
             ConnectDB.close_connection(connection);
             
         } catch (ClassNotFoundException ex) {
