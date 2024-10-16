@@ -52,8 +52,8 @@ public class eliminarImagen extends HttpServlet {
             File file = new File("/var/webapp/imageDB/" + imageName);
 
             if (file.exists()) {
-                OperationsDB.delete_image(id, connection);
                 if (file.delete()) {
+                    OperationsDB.delete_image(id, connection);
                     session.setAttribute("successMessage", "Image was deleted correctly!");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("success.jsp");
