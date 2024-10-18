@@ -5,7 +5,7 @@
     <artifactId>AD</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>AD-1.0</name>
+    <name>AD-3.0</name>
     
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
