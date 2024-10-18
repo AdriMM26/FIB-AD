@@ -1,0 +1,10 @@
+servlet/buscarImagen.class
+servlet/register.class
+test/ad/resources/JakartaEE91Resource.class
+database/ConnectDB.class
+database/OperationsDB.class
+servlet/login.class
+servlet/eliminarImagen.class
+servlet/registrarImagen.class
+test/ad/JakartaRestConfiguration.class
+servlet/modificarImagen.class
