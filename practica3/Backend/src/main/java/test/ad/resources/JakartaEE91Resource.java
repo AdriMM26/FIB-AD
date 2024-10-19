@@ -1,5 +1,7 @@
 package test.ad.resources;
 
+import database.ConnectDB;
+import database.OperationsDB;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -9,6 +11,10 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +31,30 @@ public class JakartaEE91Resource {
     }
     
     /**
+     * OPERACIONES EXTRAS
+     */
+    /**
+    * POST method to register new user in the application
+    * @param username
+    * @param password
+    * @return
+    */
+    @Path("register_user")
+    @POST
+    public Response register_user(@FormParam("username") String username,
+            @FormParam("password") String password){
+        try{
+            Connection connection = ConnectDB.open_connection();
+            int new_user = OperationsDB.register_user(username, password, connection);
+            ConnectDB.close_connection(connection);
+            return Response.ok(new_user).build();
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().build();
+        }
+    }
+    /**
     * OPERACIONES DEL SERVICIO REST
     */
     /**
@@ -38,8 +68,17 @@ public class JakartaEE91Resource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@FormParam("username") String username,
-    @FormParam("password") String password){
-        
+    @FormParam("password") String password) {
+        try{
+            Connection connection = ConnectDB.open_connection();
+            boolean existUser = OperationsDB.check_user(username, password, connection);
+            ConnectDB.close_connection(connection);
+            return Response.ok(existUser).build();
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().build();
+        }
     }
     /**
     * POST method to register a new image – File is not uploaded
@@ -61,6 +100,44 @@ public class JakartaEE91Resource {
     @FormParam("author") String author,
     @FormParam("creator") String creator,
     @FormParam("capture") String capt_date){
+        try{
+            Connection connection = ConnectDB.open_connection();
+            String uploadDate = LocalDate.now().toString();
+            /* Com aconseguim el filePart? */
+            
+            Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, capt_date, uploadDate, filePart, connection);
+                   if (insertID > 0) {
+                       boolean savedImage = insert_image_to_disk(filePart, title, insertID.toString());
+                       /* Hem de preguntar com farien lo de session attribute */
+                       if(savedImage){
+                           ConnectDB.close_connection(connection);
+                           session.setAttribute("successMessage", "Image was uploaded correctly!");
+                           session.setAttribute("isImage", true);
+                           session.setAttribute("imageID", insertID);
+                           session.setAttribute("origin","Menu");
+                           response.sendRedirect("success.jsp");
+                       }
+                       else{
+                           OperationsDB.delete_image(insertID.toString(), connection);
+                           ConnectDB.close_connection(connection);
+                           session.setAttribute("errorMessage", "Error saving image");
+                           session.setAttribute("origin","Menu");
+                           response.sendRedirect("error.jsp");
+                       }
+                       
+                   }
+                   else {
+                       ConnectDB.close_connection(connection);
+                       session.setAttribute("errorMessage", "Error uploading the image");
+                       session.setAttribute("origin","Menu");
+                       response.sendRedirect("error.jsp");
+                   }
+        }
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().build();
+        }
+        
         
     }
     /**
