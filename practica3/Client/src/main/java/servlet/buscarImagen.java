@@ -1,7 +1,5 @@
 package servlet;
 
-import database.ConnectDB;
-import database.OperationsDB;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,30 +43,30 @@ public class buscarImagen extends HttpServlet {
             response.sendRedirect("error.jsp");   
         }
         else {
-            try {
-            Connection connection = ConnectDB.open_connection();
- 
-            String title = request.getParameter("title");
-            String description = request.getParameter("descp");
-            String keywords = request.getParameter("keyw");
-            String author = request.getParameter("ath");
-            String creationDate = request.getParameter("cdate");
+            try (PrintWriter out = response.getWriter()) {
+                Connection connection = ConnectDB.open_connection();
+
+                String title = request.getParameter("title");
+                String description = request.getParameter("descp");
+                String keywords = request.getParameter("keyw");
+                String author = request.getParameter("ath");
+                String creationDate = request.getParameter("cdate");
+
+                List <String[]> images = OperationsDB.get_images(title, description, keywords, author, creationDate, connection);
+                if (images != null) {
+                    session.setAttribute("images", images);
+                    response.sendRedirect("buscarImagen.jsp");
+                }
+                else {
+                    session.setAttribute("errorMessage", "Error searching an image, try again");
+                    session.setAttribute("origin","Menu");
+                    response.sendRedirect("error.jsp");
+                }     
+                ConnectDB.close_connection(connection);
             
-            List <String[]> images = OperationsDB.get_images(title, description, keywords, author, creationDate, connection);
-            if (images != null) {
-                session.setAttribute("images", images);
-                response.sendRedirect("buscarImagen.jsp");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
             }
-            else {
-                session.setAttribute("errorMessage", "Error searching an image, try again");
-                session.setAttribute("origin","Menu");
-                response.sendRedirect("error.jsp");
-            }     
-            ConnectDB.close_connection(connection);
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-          }
         }            
     }
 
