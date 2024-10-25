@@ -1,7 +1,5 @@
 package servlet;
 
-import database.ConnectDB;
-import database.OperationsDB;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,8 +7,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.File;
-import java.sql.Connection;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,46 +45,64 @@ public class modificarImagen extends HttpServlet {
             response.sendRedirect("error.jsp");   
         }
         else {
-            try {
-            Connection connection = ConnectDB.open_connection();
- 
-            String id = request.getParameter("id");
-            String oldTitle = request.getParameter("otitle");
-            String title = request.getParameter("title");
-            String description = request.getParameter("descp");
-            String keywords = request.getParameter("keyw");
-            String author = request.getParameter("ath");
-            String creationDate = request.getParameter("cdate");
-            
-            String oldImageName = oldTitle+"_"+id;
-            String newImageName = title+"_"+id;
-                 
-            Boolean updated = OperationsDB.modify_image(id, title, description, keywords, author, creationDate, connection);
-            if (updated) {
-                File oldfile = new File("/var/webapp/imageDB/" + oldImageName);
-                File newfile = new File("/var/webapp/imageDB/" + newImageName);
-                if(oldfile.renameTo(newfile)) {
+            try (PrintWriter out = response.getWriter()) {
+
+                String id = request.getParameter("id");
+                String title = request.getParameter("title");
+                String description = request.getParameter("descp");
+                String keywords = request.getParameter("keyw");
+                String author = request.getParameter("ath");
+                String creator = session.getAttribute("username").toString();
+                String creationDate = request.getParameter("cdate");
+
+                StringBuilder data = new StringBuilder();
+                data.append("id=");
+                data.append(URLEncoder.encode(id, "UTF-8"));
+                data.append("&title=");
+                data.append(URLEncoder.encode(title, "UTF-8"));
+                data.append("&description=");
+                data.append(URLEncoder.encode(description, "UTF-8"));
+                data.append("&keywords=");
+                data.append(URLEncoder.encode(keywords, "UTF-8"));
+                data.append("&author=");
+                data.append(URLEncoder.encode(author, "UTF-8"));
+                data.append("&creator=");
+                data.append(URLEncoder.encode(creator, "UTF-8"));
+                data.append("&capture=");
+                data.append(URLEncoder.encode(creationDate, "UTF-8"));
+                
+                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/modify");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
+                connection.setDoOutput(true);
+                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
+                
+                StringBuilder datareturn = new StringBuilder();
+                InputStream is = connection.getInputStream();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                String line;
+                while((line = rd.readLine()) != null) {
+                    datareturn.append(line);
+                    datareturn.append('\r');
+                }
+                rd.close();
+                connection.disconnect();
+
+                Boolean updated = datareturn.toString().equals("true");
+
+                if (updated) {
                     session.setAttribute("successMessage", "Image updated");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("success.jsp");
                 }
                 else {
-                    Boolean aux = OperationsDB.modify_image(id, oldTitle, description, keywords, author, creationDate, connection);
-                    session.setAttribute("errorMessage", "Error updating the image title, try again");
+                    session.setAttribute("errorMessage", "Error updating the image, try again");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("error.jsp");
-                }
+                }       
             }
-            else {
-                session.setAttribute("errorMessage", "Error updating the image, try again");
-                session.setAttribute("origin","Menu");
-                response.sendRedirect("error.jsp");
-            }     
-            ConnectDB.close_connection(connection);
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-          }
         }
     }
 

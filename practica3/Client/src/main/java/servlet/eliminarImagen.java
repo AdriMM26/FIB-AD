@@ -1,7 +1,5 @@
 package servlet;
 
-import database.ConnectDB;
-import database.OperationsDB;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,8 +7,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.File;
-import java.sql.Connection;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,18 +45,39 @@ public class eliminarImagen extends HttpServlet {
             response.sendRedirect("error.jsp");     
         }
         else {
-            try {
-            Connection connection = ConnectDB.open_connection();
-            String id = request.getParameter("id");
-            String title = request.getParameter("title");
-            
-            String imageName = title+"_"+id;
+            try (PrintWriter out = response.getWriter()) {
+                
+                String id = request.getParameter("id");
+                String creator = session.getAttribute("username").toString();
+   
+                StringBuilder data = new StringBuilder();
+                data.append("id=");
+                data.append(URLEncoder.encode(id, "UTF-8"));
+                data.append("&creator=");
+                data.append(URLEncoder.encode(creator, "UTF-8"));
+                
+                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/delete");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
+                connection.setDoOutput(true);
+                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
+                
+                StringBuilder datareturn = new StringBuilder();
+                InputStream is = connection.getInputStream();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                String line;
+                while((line = rd.readLine()) != null) {
+                    datareturn.append(line);
+                    datareturn.append('\r');
+                }
+                rd.close();
+                connection.disconnect();
 
-            File file = new File("/var/webapp/imageDB/" + imageName);
+                Boolean deleted = datareturn.toString().equals("true");
 
-            if (file.exists()) {
-                if (file.delete()) {
-                    OperationsDB.delete_image(id, connection);
+                if (deleted) {
                     session.setAttribute("successMessage", "Image was deleted correctly!");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("success.jsp");
@@ -62,20 +86,9 @@ public class eliminarImagen extends HttpServlet {
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("error.jsp");
                 }
-            } else {
-                session.setAttribute("errorMessage", "File not found");
-                session.setAttribute("origin","Menu");
-                response.sendRedirect("error.jsp");
-            }
-            
-            
-            ConnectDB.close_connection(connection);
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
 
+            } 
+        }
     }  // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

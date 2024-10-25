@@ -54,9 +54,9 @@ public class OperationsDB {
         }
     }
     
-    public static int upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate, Part filepart, Connection connection){
+    public static int upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate, Connection connection){
         try{
-            String filename = Paths.get(filepart.getSubmittedFileName()).getFileName().toString();
+            String filename = "No file upload";
 
             String query = "insert into image(title, description, keywords, author, creator, capture_date, storage_date, filename) values (?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -163,6 +163,24 @@ public class OperationsDB {
         } catch (SQLException ex) {
             Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    
+    public static boolean is_user_image (Connection connection, String insertId, String creator) {
+        try{
+            String query = "select*from images where id = ? and creator = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(1, insertId);
+            statement.setString(2, creator);
+            
+            ResultSet rs = statement.executeQuery();
+            
+            return rs.next();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     

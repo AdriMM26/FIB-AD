@@ -107,9 +107,8 @@ public class JakartaEE91Resource {
         try{
             Connection connection = ConnectDB.open_connection();
             String uploadDate = LocalDate.now().toString();
-            /* Com aconseguim el filePart? */
             
-            Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, capt_date, uploadDate, filePart, connection);
+            Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, capt_date, uploadDate, connection);
             ConnectDB.close_connection(connection);
             return Response.ok(insertID).build();                 
         }
@@ -135,26 +134,61 @@ public class JakartaEE91Resource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response modifyImage (@FormParam("id") String id,
-    @FormParam("title") String title,
-    @FormParam("description") String description,
-    @FormParam("keywords") String keywords,
-    @FormParam("author") String author,
-    @FormParam("creator") String creator,
-    @FormParam("capture") String capt_date){
-        
+            @FormParam("title") String title,
+            @FormParam("description") String description,
+            @FormParam("keywords") String keywords,
+            @FormParam("author") String author,
+            @FormParam("creator") String creator,
+            @FormParam("capture") String capt_date){
+        Boolean updated = false;
+        try {
+            Connection connection = ConnectDB.open_connection();
+            if(OperationsDB.is_user_image(connection, id, creator)) {
+                updated = OperationsDB.modify_image(id, title, description, keywords, author, capt_date, connection);
+                ConnectDB.close_connection(connection);
+                return Response.ok(updated).build();
+            }
+            else {
+                ConnectDB.close_connection(connection);
+                return Response.ok(updated).build();
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.ok(updated).build();
+        }      
     }
+    
     /**
     * POST method to delete an existing image
     * @param id
+    * @param creator
     * @return
     */
     @Path("delete")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteImage (@FormParam("id") String id){
-        
+    public Response deleteImage (@FormParam("id") String id,
+            @FormParam("creator") String creator){
+        boolean deleted = false;
+        try {
+            Connection connection = ConnectDB.open_connection();
+            deleted = OperationsDB.is_user_image(connection, id, creator);
+            if(deleted) {
+                OperationsDB.delete_image(id, connection);
+                ConnectDB.close_connection(connection);
+                return Response.ok(deleted).build();
+            }
+            else {
+                ConnectDB.close_connection(connection);
+                return Response.ok(deleted).build();
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.ok(deleted).build();
+        } 
     }
+    
     /**
     * GET method to search images by id
     * @param id

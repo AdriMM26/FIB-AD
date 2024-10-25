@@ -74,7 +74,7 @@ public class registrarImagen extends HttpServlet {
                     data.append(URLEncoder.encode(author, "UTF-8"));
                     data.append("&creator=");
                     data.append(URLEncoder.encode(creator, "UTF-8"));
-                    data.append("&capt_date=");
+                    data.append("&capture=");
                     data.append(URLEncoder.encode(creationDate, "UTF-8"));
                     
                     URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/register");
