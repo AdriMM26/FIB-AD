@@ -49,7 +49,6 @@ public class register extends HttpServlet {
             data.append("&password=");
             data.append(URLEncoder.encode(password, "UTF-8"));
                   
-            
             URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/register_user");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
@@ -67,6 +66,7 @@ public class register extends HttpServlet {
                 datareturn.append('\r');
             }
             rd.close();
+            connection.disconnect();
             
             Integer new_user = Integer.valueOf(datareturn.toString());
             
