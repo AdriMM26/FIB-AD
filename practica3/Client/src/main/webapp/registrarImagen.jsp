@@ -46,7 +46,7 @@
                 </div>
                 <!-- Date of upload -->
                 <div class="selector">
-                    <input class="input-field" type="file" name="file" required/>
+                    <input class="input-field" type="file" name="file" />
                 </div>
                 <div class="btn">
                     <button class="button-personalized button-submit" type="submit">Upload</button>

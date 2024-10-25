@@ -38,10 +38,10 @@ public class register extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
+            HttpSession session = request.getSession();
+            
             String username = request.getParameter("uname");
             String password = request.getParameter("pw");
-            
-            HttpSession session = request.getSession();
             
             StringBuilder data = new StringBuilder();
             data.append("username=");
@@ -86,11 +86,8 @@ public class register extends HttpServlet {
                     session.setAttribute("origin","Login");
                     response.sendRedirect("success.jsp");
                     break;
-            }
-          
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(register.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            }  
+        }    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
