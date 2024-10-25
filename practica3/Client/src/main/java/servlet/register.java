@@ -1,8 +1,5 @@
 package servlet;
 
-import database.ConnectDB;
-import database.OperationsDB;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,7 +14,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,9 +68,7 @@ public class register extends HttpServlet {
             }
             rd.close();
             
-            String returndata = datareturn.toString();
-            
-            
+            Integer new_user = Integer.valueOf(datareturn.toString());
             
             switch(new_user) {
                 case -1:
