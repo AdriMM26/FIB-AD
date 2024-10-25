@@ -39,8 +39,8 @@
             <form action="eliminarImagen" method="POST">
                <div class="button-display">
                    <%
-                    out.println("<input name = \"title\" type=\"text\" value =\""+title+"\" hidden/>");
                     out.println("<input name = \"id\" type=\"text\" value =\""+id+"\"hidden/>");
+                    out.println("<input name = \"title\" type=\"text\" value =\""+title+"\" hidden/>");
                     out.println("<button class=\"button-personalized button-accept\" type=\"submit\">Accept</button>");
                     %>
                     <button type="button" class="button-personalized button-cancel" onclick="window.location.href='buscarImagen.jsp'">Cancel</button>

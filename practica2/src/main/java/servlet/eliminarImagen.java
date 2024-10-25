@@ -50,25 +50,29 @@ public class eliminarImagen extends HttpServlet {
             String imageName = title+"_"+id;
 
             File file = new File("/var/webapp/imageDB/" + imageName);
-
-            if (file.exists()) {
-                if (file.delete()) {
-                    OperationsDB.delete_image(id, connection);
-                    session.setAttribute("successMessage", "Image was deleted correctly!");
-                    session.setAttribute("origin","Menu");
-                    response.sendRedirect("success.jsp");
+            if(OperationsDB.is_user_image(connection, title, id, session.getAttribute("username").toString())) {
+                if (file.exists()) {
+                    if (file.delete()) {
+                        OperationsDB.delete_image(id, connection);
+                        session.setAttribute("successMessage", "Image was deleted correctly!");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("success.jsp");
+                    } else {
+                        session.setAttribute("errorMessage", "Error deleting image");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("error.jsp");
+                    }
                 } else {
-                    session.setAttribute("errorMessage", "Error deleting image");
+                    session.setAttribute("errorMessage", "File not found");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("error.jsp");
                 }
-            } else {
-                session.setAttribute("errorMessage", "File not found");
+            }
+            else {
+                session.setAttribute("errorMessage", "Error deleting image");
                 session.setAttribute("origin","Menu");
                 response.sendRedirect("error.jsp");
             }
-            
-            
             ConnectDB.close_connection(connection);
             
         } catch (ClassNotFoundException ex) {

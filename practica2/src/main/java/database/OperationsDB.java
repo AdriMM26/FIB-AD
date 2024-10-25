@@ -166,6 +166,25 @@ public class OperationsDB {
         }
     }
     
+    public static boolean is_user_image (Connection connection, String title, String insertId, String creator) {
+        try{
+            String query = "select*from images where id = ? and title = ? and creator = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(1, insertId);
+            statement.setString(2, title);
+            statement.setString(3, creator);
+            
+            ResultSet rs = statement.executeQuery();
+            
+            return rs.next();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     private static int get_max_id(Connection connection) {
         try{
             String query = "select max(id) from image";

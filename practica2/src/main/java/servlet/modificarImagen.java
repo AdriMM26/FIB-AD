@@ -55,19 +55,26 @@ public class modificarImagen extends HttpServlet {
             
             String oldImageName = oldTitle+"_"+id;
             String newImageName = title+"_"+id;
-                 
-            Boolean updated = OperationsDB.modify_image(id, title, description, keywords, author, creationDate, connection);
-            if (updated) {
-                File oldfile = new File("/var/webapp/imageDB/" + oldImageName);
-                File newfile = new File("/var/webapp/imageDB/" + newImageName);
-                if(oldfile.renameTo(newfile)) {
-                    session.setAttribute("successMessage", "Image updated");
-                    session.setAttribute("origin","Menu");
-                    response.sendRedirect("success.jsp");
+            
+            if(OperationsDB.is_user_image(connection, oldTitle, id, session.getAttribute("username").toString())) {
+                Boolean updated = OperationsDB.modify_image(id, title, description, keywords, author, creationDate, connection);
+                if (updated) {
+                    File oldfile = new File("/var/webapp/imageDB/" + oldImageName);
+                    File newfile = new File("/var/webapp/imageDB/" + newImageName);
+                    if(oldfile.renameTo(newfile)) {
+                        session.setAttribute("successMessage", "Image updated");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("success.jsp");
+                    }
+                    else {
+                        Boolean aux = OperationsDB.modify_image(id, oldTitle, description, keywords, author, creationDate, connection);
+                        session.setAttribute("errorMessage", "Error updating the image title, try again");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("error.jsp");
+                    }
                 }
                 else {
-                    Boolean aux = OperationsDB.modify_image(id, oldTitle, description, keywords, author, creationDate, connection);
-                    session.setAttribute("errorMessage", "Error updating the image title, try again");
+                    session.setAttribute("errorMessage", "Error updating the image, try again");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("error.jsp");
                 }
@@ -76,7 +83,7 @@ public class modificarImagen extends HttpServlet {
                 session.setAttribute("errorMessage", "Error updating the image, try again");
                 session.setAttribute("origin","Menu");
                 response.sendRedirect("error.jsp");
-            }     
+            }
             ConnectDB.close_connection(connection);
             
         } catch (ClassNotFoundException ex) {
