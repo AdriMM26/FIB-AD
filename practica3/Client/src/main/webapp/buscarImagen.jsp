@@ -120,6 +120,9 @@
             <div class = "filter">
                 <form action="buscarImagen" method = "POST">
                     <div class="input-box">
+                    <input type="number" class="input-field" name="id" placeholder="Image ID">
+                    </div> 
+                    <div class="input-box">
                     <input type="text" class="input-field" name="title" placeholder="Image title">
                     </div> 
                     <div class="input-box">

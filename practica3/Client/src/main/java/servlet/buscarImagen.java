@@ -8,12 +8,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  *
@@ -44,16 +48,51 @@ public class buscarImagen extends HttpServlet {
         }
         else {
             try (PrintWriter out = response.getWriter()) {
-                Connection connection = ConnectDB.open_connection();
 
+                String id = request.getParameter("id");
                 String title = request.getParameter("title");
                 String description = request.getParameter("descp");
                 String keywords = request.getParameter("keyw");
                 String author = request.getParameter("ath");
                 String creationDate = request.getParameter("cdate");
+                
+                StringBuilder data = new StringBuilder();
+                data.append("id=");
+                data.append(URLEncoder.encode(id, "UTF-8"));
+                data.append("&title=");
+                data.append(URLEncoder.encode(title, "UTF-8"));
+                data.append("&description=");
+                data.append(URLEncoder.encode(description, "UTF-8"));
+                data.append("&keywords=");
+                data.append(URLEncoder.encode(keywords, "UTF-8"));
+                data.append("&author=");
+                data.append(URLEncoder.encode(author, "UTF-8"));
+                data.append("&capture=");
+                data.append(URLEncoder.encode(creationDate, "UTF-8"));
+                
+                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/search");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setDoOutput(true);
+                
+                StringBuilder datareturn = new StringBuilder();
+                InputStream is = connection.getInputStream();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                String line;
+                while((line = rd.readLine()) != null) {
+                    datareturn.append(line);
+                    datareturn.append('\r');
+                }
+                rd.close();
+                connection.disconnect();
+                
+                String result= datareturn.toString();
 
-                List <String[]> images = OperationsDB.get_images(title, description, keywords, author, creationDate, connection);
-                if (images != null) {
+
+                if (result != null) {
+                    Gson gson = new Gson();
+                    List<String[]> images = gson.fromJson(result, new TypeToken<List<String[]>>(){}.getType());
                     session.setAttribute("images", images);
                     response.sendRedirect("buscarImagen.jsp");
                 }
@@ -62,10 +101,6 @@ public class buscarImagen extends HttpServlet {
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("error.jsp");
                 }     
-                ConnectDB.close_connection(connection);
-            
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
             }
         }            
     }

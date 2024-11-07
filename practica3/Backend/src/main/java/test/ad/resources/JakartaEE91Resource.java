@@ -1,5 +1,6 @@
 package test.ad.resources;
 
+import com.google.gson.Gson;
 import database.ConnectDB;
 import database.OperationsDB;
 import jakarta.ws.rs.Consumes;
@@ -13,8 +14,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -188,61 +191,38 @@ public class JakartaEE91Resource {
             return Response.ok(deleted).build();
         } 
     }
-    
+        
+    //SEARCH BUSQUEDA CONJUNTA PUNTO EXTRA ENUNCIADO
     /**
-    * GET method to search images by id
+    * GET method to search images
     * @param id
-    * @return
-    */
-    @Path("searchID/{id}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchByID (@PathParam("id") int id){
-        
-    }
-    /**
-    * GET method to search images by title
     * @param title
-    * @return
-    */
-    @Path("searchTitle/{title}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchByTitle (@PathParam("title") String title){
-        
-    }
-    /**
-    * GET method to search images by creation date. Date format should be
-    * yyyy-mm-dd
     * @param date
-    * @return
-    */
-    @Path("searchCreationDate/{date}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchByCreationDate (@PathParam("date") String date){
-        
-    }
-    /**
-    * GET method to search images by author
     * @param author
-    * @return
-    */
-    @Path("searchAuthor/{author}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchByAuthor (@PathParam("author") String author){
-        
-    }
-    /**
-    * GET method to search images by keyword
     * @param keywords
+    * @param description
     * @return
     */
-    @Path("searchKeywords/{keywords}")
+    @Path("search")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchByKeywords (@PathParam("keywords") String keywords){
-        
+    public Response search (@PathParam("id") int id,
+            @PathParam("title") String title,
+            @PathParam("date") String date,
+            @PathParam("author") String author,
+            @PathParam("keywords") String keywords,
+            @PathParam("description") String description) {
+        try {
+                Connection connection = ConnectDB.open_connection();
+                List <String[]> images = OperationsDB.get_images(title, description, keywords, author, date, connection);
+                Gson json = new Gson();
+                json.toJson(images);
+                ConnectDB.close_connection(connection);
+                return Response.ok(json).build();
+            
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
+                return Response.ok(null).build();
+            }
+        }
     }
-}
