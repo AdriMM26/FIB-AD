@@ -122,11 +122,14 @@ public class JakartaEE91Resource {
             
             Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, capt_date, uploadDate, connection);
             ConnectDB.close_connection(connection);
-            return Response.ok(insertID).build();                 
+            if(insertID > 0){
+                return Response.status(201).build();
+            }
+            else return Response.serverError().build();
         }
         catch (ClassNotFoundException ex) {
             Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.ok(0).build();
+            return Response.serverError().build();
         }  
     }
     

@@ -85,23 +85,11 @@ public class registrarImagen extends HttpServlet {
                     connection.setDoOutput(true);
                     connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
 
-                    StringBuilder datareturn = new StringBuilder();
-                    InputStream is = connection.getInputStream();
-                    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-                    String line;
-                    while((line = rd.readLine()) != null) {
-                        datareturn.append(line);
-                        datareturn.append('\r');
-                    }
-                    rd.close();
+                    int code = connection.getResponseCode();
                     connection.disconnect();
                     
-                    Integer insertID = Integer.valueOf(datareturn.toString());
-                    
-                    if (insertID > 0) {
+                    if (code == 201) {
                          session.setAttribute("successMessage", "Image was uploaded correctly!");
-                         session.setAttribute("isImage", true);
-                         session.setAttribute("imageID", insertID);
                          session.setAttribute("origin","Menu");
                          response.sendRedirect("success.jsp");
 
