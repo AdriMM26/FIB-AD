@@ -168,7 +168,7 @@ public class OperationsDB {
     
     public static boolean is_user_image (Connection connection, String title, String insertId, String creator) {
         try{
-            String query = "select*from images where id = ? and title = ? and creator = ?";
+            String query = "select*from image where id = ? and title = ? and creator = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             
             statement.setString(1, insertId);

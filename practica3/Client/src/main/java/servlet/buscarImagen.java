@@ -57,25 +57,28 @@ public class buscarImagen extends HttpServlet {
                 String creationDate = request.getParameter("cdate");
                 
                 StringBuilder data = new StringBuilder();
-                data.append("id=");
+                data.append("http://localhost:8080/Backend/resources/jakartaee9/search");
+                data.append("?id=");
                 data.append(URLEncoder.encode(id, "UTF-8"));
                 data.append("&title=");
                 data.append(URLEncoder.encode(title, "UTF-8"));
-                data.append("&description=");
-                data.append(URLEncoder.encode(description, "UTF-8"));
-                data.append("&keywords=");
-                data.append(URLEncoder.encode(keywords, "UTF-8"));
+                data.append("&date=");
+                data.append(URLEncoder.encode(creationDate, "UTF-8"));
                 data.append("&author=");
                 data.append(URLEncoder.encode(author, "UTF-8"));
-                data.append("&capture=");
-                data.append(URLEncoder.encode(creationDate, "UTF-8"));
+                data.append("&keywords=");
+                data.append(URLEncoder.encode(keywords, "UTF-8"));
+                data.append("&description=");
+                data.append(URLEncoder.encode(description, "UTF-8"));
                 
-                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/search");
+                
+                
+                URL url = new URL(data.toString());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setDoOutput(true);
-                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
+                
                 
                 StringBuilder datareturn = new StringBuilder();
                 InputStream is = connection.getInputStream();
@@ -88,10 +91,10 @@ public class buscarImagen extends HttpServlet {
                 rd.close();
                 connection.disconnect();
                 
-                String result= datareturn.toString();
-
-
-                if (result != null) {
+                int code = connection.getResponseCode();
+                String result = datareturn.toString();
+                
+                if (code == 200) {
                     Gson gson = new Gson();
                     List<String[]> images = gson.fromJson(result, new TypeToken<List<String[]>>(){}.getType());
                     session.setAttribute("images", images);

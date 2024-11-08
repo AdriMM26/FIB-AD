@@ -116,7 +116,7 @@ public class OperationsDB {
         }
     }
     
-    public static List<String[]> get_images(String title,String description,String keywords,String author,String creationDate,Connection connection) {
+    public static List<String[]> get_images(String insertID, String title,String description,String keywords,String author,String creationDate,Connection connection) {
         try{
             
             List<String[]> images = new ArrayList<>();
@@ -125,6 +125,10 @@ public class OperationsDB {
             String query = "select * from image where 1=1";
             PreparedStatement statement;
             
+            if(!insertID.isBlank()) {
+                query += " and id like ?";
+                values.add("%" + insertID + "%");
+            }
             if(!title.isBlank()) {
                 query += " and title like ?";
                 values.add("%" + title + "%");
@@ -168,7 +172,7 @@ public class OperationsDB {
     
     public static boolean is_user_image (Connection connection, String insertId, String creator) {
         try{
-            String query = "select*from images where id = ? and creator = ?";
+            String query = "select*from image where id = ? and creator = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             
             statement.setString(1, insertId);
