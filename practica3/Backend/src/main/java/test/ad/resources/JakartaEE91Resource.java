@@ -46,16 +46,22 @@ public class JakartaEE91Resource {
     @POST
     public Response register_user(@FormParam("username") String username,
             @FormParam("password") String password){
-        int new_user = -1;
         try{
             Connection connection = ConnectDB.open_connection();
-            new_user = OperationsDB.register_user(username, password, connection);
+            int new_user = OperationsDB.register_user(username, password, connection);
             ConnectDB.close_connection(connection);
-            return Response.ok(new_user).build();
+            switch (new_user) {
+                case 1:
+                    return Response.status(201).build();
+                case -1:
+                    return Response.status(409).build();
+                default:
+                    return Response.serverError().build();
+            }
         }
         catch (ClassNotFoundException ex){
             Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.ok(new_user).build();
+            return Response.serverError().build();
         }
     }
     

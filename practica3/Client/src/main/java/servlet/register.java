@@ -57,31 +57,21 @@ public class register extends HttpServlet {
             connection.setDoOutput(true);
             connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
             
-            StringBuilder datareturn = new StringBuilder();
-            InputStream is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while((line = rd.readLine()) != null) {
-                datareturn.append(line);
-                datareturn.append('\r');
-            }
-            rd.close();
+            int code = connection.getResponseCode();
             connection.disconnect();
             
-            Integer new_user = Integer.valueOf(datareturn.toString());
-            
-            switch(new_user) {
-                case -1:
+            switch(code) {
+                case 500:
                     session.setAttribute("errorMessage","Ups, Something went wrong");
                     session.setAttribute("origin","Login");
                     response.sendRedirect("error.jsp");
                     break;
-                case 0:
+                case 409: //409 already created
                     session.setAttribute("errorMessage","User already registered");
                     session.setAttribute("origin","Login");
                     response.sendRedirect("error.jsp");
                     break;
-                default:
+                default: //201
                     session.setAttribute("successMessage","User registered succesfully");
                     session.setAttribute("origin","Login");
                     response.sendRedirect("success.jsp");
