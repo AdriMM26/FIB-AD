@@ -75,6 +75,7 @@ public class buscarImagen extends HttpServlet {
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setDoOutput(true);
+                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
                 
                 StringBuilder datareturn = new StringBuilder();
                 InputStream is = connection.getInputStream();
