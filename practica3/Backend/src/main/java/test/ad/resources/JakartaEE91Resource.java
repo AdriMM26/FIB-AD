@@ -79,11 +79,14 @@ public class JakartaEE91Resource {
             Connection connection = ConnectDB.open_connection();
             existUser = OperationsDB.check_user(username, password, connection);
             ConnectDB.close_connection(connection);
-            return Response.ok(existUser).build();
+            if(existUser){ 
+                return Response.ok().build();
+            }
+            else return Response.status(404).build();
         }
         catch (ClassNotFoundException ex){
             Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.ok(existUser).build();
+            return Response.serverError().build();
         }
     }
     

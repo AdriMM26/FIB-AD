@@ -58,20 +58,10 @@ public class login extends HttpServlet {
             connection.setDoOutput(true);
             connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
             
-            StringBuilder datareturn = new StringBuilder();
-            InputStream is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while((line = rd.readLine()) != null) {
-                datareturn.append(line);
-                datareturn.append('\r');
-            }
-            rd.close();
+            int code = connection.getResponseCode();
             connection.disconnect();
             
-            Boolean existUser = datareturn.toString().equals("true");
-            
-            if(existUser)  {
+            if(code == 200) {
                 session.setAttribute("username", username);
                 response.sendRedirect("menu.jsp");
             }
