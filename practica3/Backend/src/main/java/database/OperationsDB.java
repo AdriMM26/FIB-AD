@@ -126,8 +126,9 @@ public class OperationsDB {
             PreparedStatement statement;
             
             if(!insertID.isBlank()) {
-                query += " and id like ?";
-                values.add("%" + insertID + "%");
+                int id = Integer.parseInt(insertID);
+                query += " and id = ?";
+                values.add(id);
             }
             if(!title.isBlank()) {
                 query += " and title like ?";
@@ -155,7 +156,7 @@ public class OperationsDB {
                 statement.setObject(i+1, values.get(i));
             }
             ResultSet rs = statement.executeQuery();
-            
+
             while (rs.next()) {
                 String[] imageInfo = new String[9];
                 for (int i = 0; i < 9; ++i) { imageInfo[i] = rs.getString(i+1); }

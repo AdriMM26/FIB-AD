@@ -60,6 +60,7 @@ public class login extends HttpServlet {
             
             int code = connection.getResponseCode();
             connection.disconnect();
+            System.out.println(code);
             
             if(code == 200) {
                 session.setAttribute("username", username);

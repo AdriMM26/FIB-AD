@@ -63,7 +63,7 @@ public class JakartaEE91Resource {
     }
     
     /**
-    * GET method to search images with zero or more parameters
+    * GET method to search images with zero or more parameters, if zero, returns all the images in the db.
     * @param id
     * @param title
     * @param date
@@ -252,7 +252,7 @@ public class JakartaEE91Resource {
         try {
             Connection connection = ConnectDB.open_connection();
             String insertID = Integer.toString(id);
-            List <String[]> images = OperationsDB.get_images(insertID,null,null,null,null,null,connection);
+            List <String[]> images = OperationsDB.get_images(insertID,"","","","","",connection);
             String json = null;
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -280,7 +280,7 @@ public class JakartaEE91Resource {
     public Response searchByTitle (@PathParam("title") String title) {
         try {
             Connection connection = ConnectDB.open_connection();
-            List <String[]> images = OperationsDB.get_images(null,title,null,null,null,null,connection);
+            List <String[]> images = OperationsDB.get_images("",title,"","","","",connection);
             String json = null;
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -309,7 +309,7 @@ public class JakartaEE91Resource {
     public Response searchByCreationDate (@PathParam("date") String date) {
         try {
             Connection connection = ConnectDB.open_connection();
-            List <String[]> images = OperationsDB.get_images(null,null,null,null,null,date,connection);
+            List <String[]> images = OperationsDB.get_images("","","","","",date,connection);
             String json = null;
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -337,7 +337,7 @@ public class JakartaEE91Resource {
     public Response searchByAuthor (@PathParam("author") String author) {
         try {
             Connection connection = ConnectDB.open_connection();
-            List <String[]> images = OperationsDB.get_images(null,null,null,null,author,null,connection);
+            List <String[]> images = OperationsDB.get_images("","","","",author,"",connection);
             String json = null;
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -365,7 +365,7 @@ public class JakartaEE91Resource {
     public Response searchByKeywords (@PathParam("keywords") String keywords) {
         try {
             Connection connection = ConnectDB.open_connection();
-            List <String[]> images = OperationsDB.get_images(null,null,null,keywords,null,null,connection);
+            List <String[]> images = OperationsDB.get_images("","","",keywords,"","",connection);
             String json = null;
             try {
                 ObjectMapper objectMapper = new ObjectMapper();

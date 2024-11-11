@@ -57,7 +57,7 @@ public class buscarImagen extends HttpServlet {
                 String creationDate = request.getParameter("cdate");
                 
                 StringBuilder data = new StringBuilder();
-                data.append("http://localhost:8080/Backend/resources/jakartaee9/search");
+                data.append("http://localhost:8080/Backend/resources/jakartaee9/search/");
                 data.append("?id=");
                 data.append(URLEncoder.encode(id, "UTF-8"));
                 data.append("&title=");
