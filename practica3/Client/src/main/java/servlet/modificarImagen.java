@@ -95,7 +95,7 @@ public class modificarImagen extends HttpServlet {
                     }   
                 }
                 else {
-                        session.setAttribute("errorMessage", "No camp can be left empty or blank");
+                        session.setAttribute("errorMessage", "No field can be left empty or blank");
                         session.setAttribute("origin","Menu");
                         response.sendRedirect("error.jsp");
                     }   
