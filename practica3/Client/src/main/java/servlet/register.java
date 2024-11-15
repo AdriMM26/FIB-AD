@@ -43,40 +43,47 @@ public class register extends HttpServlet {
             String username = request.getParameter("uname");
             String password = request.getParameter("pw");
             
-            StringBuilder data = new StringBuilder();
-            data.append("username=");
-            data.append(URLEncoder.encode(username, "UTF-8"));
-            data.append("&password=");
-            data.append(URLEncoder.encode(password, "UTF-8"));
-                  
-            URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/register_user");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
-            connection.setDoOutput(true);
-            connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
-            
-            int code = connection.getResponseCode();
-            connection.disconnect();
-            
-            switch(code) {
-                case 500:
-                    session.setAttribute("errorMessage","Ups, Something went wrong");
-                    session.setAttribute("origin","Login");
-                    response.sendRedirect("error.jsp");
-                    break;
-                case 409: //409 already created
-                    session.setAttribute("errorMessage","User already registered");
-                    session.setAttribute("origin","Login");
-                    response.sendRedirect("error.jsp");
-                    break;
-                default: //201
-                    session.setAttribute("successMessage","User registered succesfully");
-                    session.setAttribute("origin","Login");
-                    response.sendRedirect("success.jsp");
-                    break;
-            }  
+            if(!username.isBlank() && username!=null && password!=null && !password.isBlank()){
+                StringBuilder data = new StringBuilder();
+                data.append("username=");
+                data.append(URLEncoder.encode(username, "UTF-8"));
+                data.append("&password=");
+                data.append(URLEncoder.encode(password, "UTF-8"));
+
+                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/register_user");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
+                connection.setDoOutput(true);
+                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
+
+                int code = connection.getResponseCode();
+                connection.disconnect();
+
+                switch(code) {
+                    case 500:
+                        session.setAttribute("errorMessage","Ups, Something went wrong");
+                        session.setAttribute("origin","Login");
+                        response.sendRedirect("error.jsp");
+                        break;
+                    case 409: //409 already created
+                        session.setAttribute("errorMessage","User already registered");
+                        session.setAttribute("origin","Login");
+                        response.sendRedirect("error.jsp");
+                        break;
+                    default: //201
+                        session.setAttribute("successMessage","User registered succesfully");
+                        session.setAttribute("origin","Login");
+                        response.sendRedirect("success.jsp");
+                        break;
+                } 
+            }
+            else{
+                session.setAttribute("errorMessage","Username or password include whitespaces or is empty");
+                session.setAttribute("origin","Login");
+                response.sendRedirect("error.jsp");
+            }   
         }    
     }
 

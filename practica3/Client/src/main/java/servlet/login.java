@@ -44,32 +44,41 @@ public class login extends HttpServlet {
             String username = request.getParameter("uname");
             String password = request.getParameter("pw");
             
-            StringBuilder data = new StringBuilder();
-            data.append("username=");
-            data.append(URLEncoder.encode(username, "UTF-8"));
-            data.append("&password=");
-            data.append(URLEncoder.encode(password, "UTF-8"));
-                  
-            URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/login");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
-            connection.setDoOutput(true);
-            connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
-            
-            int code = connection.getResponseCode();
-            connection.disconnect();
-            
-            if(code == 200) {
-                session.setAttribute("username", username);
-                response.sendRedirect("menu.jsp");
+            if(!username.isBlank() && username!=null && password!=null && !password.isBlank()){
+                StringBuilder data = new StringBuilder();
+                data.append("username=");
+                data.append(URLEncoder.encode(username, "UTF-8"));
+                data.append("&password=");
+                data.append(URLEncoder.encode(password, "UTF-8"));
+
+                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/login");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
+                connection.setDoOutput(true);
+                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
+
+                int code = connection.getResponseCode();
+                connection.disconnect();
+
+                if(code == 200) {
+                    session.setAttribute("username", username);
+                    response.sendRedirect("menu.jsp");
+                }
+                else {
+                    session.setAttribute("errorMessage","Incorrect username or password");
+                    session.setAttribute("origin","Login");
+                    response.sendRedirect("error.jsp");
+                }
             }
-            else {
-                session.setAttribute("errorMessage","Incorrect username or password");
+            else{
+                session.setAttribute("errorMessage","Username or password include whitespaces or is empty");
                 session.setAttribute("origin","Login");
                 response.sendRedirect("error.jsp");
             }
+            
+            
        
         }
     } 
