@@ -61,7 +61,7 @@ public class registrarImagen extends HttpServlet {
                 String creator = session.getAttribute("username").toString();
                 String creationDate = request.getParameter("cdate");
                 
-                if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null) {
+                if (!title.isBlank() && title != null && description != null && keywords != null && author != null && creator != null && creationDate != null) {
                     
                     StringBuilder data = new StringBuilder();
                     data.append("title=");
