@@ -55,43 +55,51 @@ public class modificarImagen extends HttpServlet {
                 String creator = session.getAttribute("username").toString();
                 String creationDate = request.getParameter("cdate");
 
-                StringBuilder data = new StringBuilder();
-                data.append("id=");
-                data.append(URLEncoder.encode(id, "UTF-8"));
-                data.append("&title=");
-                data.append(URLEncoder.encode(title, "UTF-8"));
-                data.append("&description=");
-                data.append(URLEncoder.encode(description, "UTF-8"));
-                data.append("&keywords=");
-                data.append(URLEncoder.encode(keywords, "UTF-8"));
-                data.append("&author=");
-                data.append(URLEncoder.encode(author, "UTF-8"));
-                data.append("&creator=");
-                data.append(URLEncoder.encode(creator, "UTF-8"));
-                data.append("&capture=");
-                data.append(URLEncoder.encode(creationDate, "UTF-8"));
-                
-                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/modify");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
-                connection.setDoOutput(true);
-                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
-                
-                int code = connection.getResponseCode();
-                connection.disconnect();
+                if (!title.isBlank() && title != null && description != null && keywords != null && author != null && creator != null && creationDate != null) {
+                    StringBuilder data = new StringBuilder();
+                    data.append("id=");
+                    data.append(URLEncoder.encode(id, "UTF-8"));
+                    data.append("&title=");
+                    data.append(URLEncoder.encode(title, "UTF-8"));
+                    data.append("&description=");
+                    data.append(URLEncoder.encode(description, "UTF-8"));
+                    data.append("&keywords=");
+                    data.append(URLEncoder.encode(keywords, "UTF-8"));
+                    data.append("&author=");
+                    data.append(URLEncoder.encode(author, "UTF-8"));
+                    data.append("&creator=");
+                    data.append(URLEncoder.encode(creator, "UTF-8"));
+                    data.append("&capture=");
+                    data.append(URLEncoder.encode(creationDate, "UTF-8"));
 
-                if (code == 200) {
-                    session.setAttribute("successMessage", "Image updated");
-                    session.setAttribute("origin","Menu");
-                    response.sendRedirect("success.jsp");
+                    URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/modify");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
+                    connection.setDoOutput(true);
+                    connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
+
+                    int code = connection.getResponseCode();
+                    connection.disconnect();
+
+                    if (code == 200) {
+                        session.setAttribute("successMessage", "Image updated");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("success.jsp");
+                    }
+                    else {
+                        session.setAttribute("errorMessage", "Error updating the image, try again");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("error.jsp");
+                    }   
                 }
                 else {
-                    session.setAttribute("errorMessage", "Error updating the image, try again");
-                    session.setAttribute("origin","Menu");
-                    response.sendRedirect("error.jsp");
-                }       
+                        session.setAttribute("errorMessage", "No camp can be left empty or blank");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("error.jsp");
+                    }   
+                    
             }
         }
     }

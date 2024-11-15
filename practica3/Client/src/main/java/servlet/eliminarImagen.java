@@ -49,34 +49,40 @@ public class eliminarImagen extends HttpServlet {
                 
                 String id = request.getParameter("id");
                 String creator = session.getAttribute("username").toString();
-   
-                StringBuilder data = new StringBuilder();
-                data.append("id=");
-                data.append(URLEncoder.encode(id, "UTF-8"));
-                data.append("&creator=");
-                data.append(URLEncoder.encode(creator, "UTF-8"));
                 
-                URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/delete");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
-                connection.setDoOutput(true);
-                connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
-                
-                int code = connection.getResponseCode();
-                connection.disconnect();
+                if(!id.isBlank() && id!=null && !creator.isBlank() && creator!=null){
+                    StringBuilder data = new StringBuilder();
+                    data.append("id=");
+                    data.append(URLEncoder.encode(id, "UTF-8"));
+                    data.append("&creator=");
+                    data.append(URLEncoder.encode(creator, "UTF-8"));
 
-                if (code == 200) {
-                    session.setAttribute("successMessage", "Image was deleted correctly!");
-                    session.setAttribute("origin","Menu");
-                    response.sendRedirect("success.jsp");
-                } else {
+                    URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/delete");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
+                    connection.setDoOutput(true);
+                    connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
+
+                    int code = connection.getResponseCode();
+                    connection.disconnect();
+
+                    if (code == 200) {
+                        session.setAttribute("successMessage", "Image was deleted correctly!");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("success.jsp");
+                    } else {
+                        session.setAttribute("errorMessage", "Error deleting image");
+                        session.setAttribute("origin","Menu");
+                        response.sendRedirect("error.jsp");
+                    }
+                }
+                else{
                     session.setAttribute("errorMessage", "Error deleting image");
                     session.setAttribute("origin","Menu");
                     response.sendRedirect("error.jsp");
                 }
-
             } 
         }
     }  // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
