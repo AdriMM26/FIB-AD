@@ -23,6 +23,13 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
 /**
  *
  * @author alumne
@@ -60,8 +67,9 @@ public class registrarImagen extends HttpServlet {
                 String author = request.getParameter("ath");
                 String creator = session.getAttribute("username").toString();
                 String creationDate = request.getParameter("cdate");
+                final Part filePart = request.getPart("file");
                 
-                if (!title.isBlank() && title != null && description != null && keywords != null && author != null && creator != null && creationDate != null) {
+                if (!title.isBlank() && title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && filePart != null) {
                     
                     StringBuilder data = new StringBuilder();
                     data.append("title=");
