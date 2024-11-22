@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,6 +82,20 @@ public class OperationsDB {
         }
     }
     
+    public static boolean write_image (String file_name, String insertID, InputStream fileInputStream) {
+        try {
+            File path = new File("/var/webapp/imageDB");
+            String filename = file_name+"_"+insertID;
+            File file = new File (path, filename);
+            long numBytes;
+            numBytes = Files.copy(fileInputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            if(numBytes > 0) return true;
+            else return false;
+        } catch (IOException ex) {
+            return false;
+        }
+    }
+    
     public static void delete_image(String insertID, Connection connection){
         try{
             String query = "delete from image where id=?";
@@ -90,6 +108,18 @@ public class OperationsDB {
         } catch (SQLException ex) {
             Logger.getLogger(OperationsDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static boolean delete_disk_image (String insertID, Connection connection ) {
+        List <String[]> images = OperationsDB.get_images(insertID,"","","","","",connection);
+        String[] imageInfo = images.get(0);
+        String filename = imageInfo[8]+"_"+insertID;
+        File path = new File ("/var/webapp/imageDB");
+        File file = new File(path, filename);
+        if(file.exists()) {
+            if(file.delete()) return true;
+            else return false;
+        } else return false;
     }
     
     public static boolean modify_image(String insertID, String title, String description, String keywords, String author, String creationDate, Connection connection) {

@@ -152,7 +152,7 @@
                         for(int i = 0; i < total; ++i) {
                             String [] imageInfo = gallery.get(i);
                             if(imageInfo[5].equals(username)) {
-                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/practica2/imageDB/" + imageInfo[1] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/" + imageInfo[8] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
                                 out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
@@ -161,7 +161,7 @@
                                 out.println("<br> </div>");   
                             }
                             else  {
-                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/practica2/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br> </div>");
                             }
                         }

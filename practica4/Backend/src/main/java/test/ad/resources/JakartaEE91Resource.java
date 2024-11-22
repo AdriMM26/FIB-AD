@@ -164,11 +164,21 @@ public class JakartaEE91Resource {
             String uploadDate = LocalDate.now().toString();
             
             Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, capt_date, uploadDate, filename,connection);
-            ConnectDB.close_connection(connection);
             if(insertID > 0){
-                return Response.status(201).build();
+                if(OperationsDB.write_image(filename, insertID.toString(), fileInputStream)) {
+                    ConnectDB.close_connection(connection);
+                    return Response.status(201).build();
+                }
+                else {
+                    OperationsDB.delete_image(insertID.toString(), connection);
+                    ConnectDB.close_connection(connection);
+                    return Response.serverError().build();
+                }
             }
-            else return Response.serverError().build();
+            else {
+                ConnectDB.close_connection(connection);
+                return Response.serverError().build();
+            }
         }
         catch (ClassNotFoundException ex) {
             Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
@@ -234,9 +244,15 @@ public class JakartaEE91Resource {
         try {
             Connection connection = ConnectDB.open_connection();
             if(OperationsDB.is_user_image(connection, id, creator)) {
-                OperationsDB.delete_image(id, connection);
-                ConnectDB.close_connection(connection);
-                return Response.ok().build();
+                if(OperationsDB.delete_disk_image(id, connection)) {
+                    OperationsDB.delete_image(id, connection);
+                    ConnectDB.close_connection(connection);
+                    return Response.ok().build();
+                }
+                else {
+                    ConnectDB.close_connection(connection);
+                    return Response.serverError().build();
+                }
             }
             else {
                 ConnectDB.close_connection(connection);
