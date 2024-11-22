@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.InputStream;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
 
@@ -141,20 +143,22 @@ public class JakartaEE91Resource {
     * @param capt_date
     * @param filename
     * @param fileInputStream
+    * @param fileMetaData
     * @return
     */
     @Path("register")
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response registerImage (@FormParam("title") String title,
-            @FormParam("description") String description,
-            @FormParam("keywords") String keywords,
-            @FormParam("author") String author,
-            @FormParam("creator") String creator,
-            @FormParam("capture") String capt_date,
-            @FormParam("filename") String filename,
-            @FormParam("file") InputStream fileInputStream) {
+    public Response registerImage (@FormDataParam("title") String title,
+            @FormDataParam("description") String description,
+            @FormDataParam("keywords") String keywords,
+            @FormDataParam("author") String author,
+            @FormDataParam("creator") String creator,
+            @FormDataParam("capture") String capt_date,
+            @FormDataParam("filename") String filename,
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition fileMetaData) {
         try{
             Connection connection = ConnectDB.open_connection();
             String uploadDate = LocalDate.now().toString();

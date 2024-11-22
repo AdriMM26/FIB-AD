@@ -77,9 +77,9 @@ public class registrarImagen extends HttpServlet {
                 
                 if (!title.isBlank() && description != null && keywords != null && author != null && creator != null && creationDate != null && filePart != null) {
                     
-                   final Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
-                   StreamDataBodyPart fileP = new StreamDataBodyPart("file", filePart.getInputStream());
-                   FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+                    final Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
+                    StreamDataBodyPart fileP = new StreamDataBodyPart("file", filePart.getInputStream());
+                    FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
                     final FormDataMultiPart multipart = (FormDataMultiPart) formDataMultiPart
                         .field("title", title, MediaType.TEXT_PLAIN_TYPE)
                         .field("description", description, MediaType.TEXT_PLAIN_TYPE)
@@ -90,7 +90,7 @@ public class registrarImagen extends HttpServlet {
                         .field("filename", filename, MediaType.TEXT_PLAIN_TYPE)
                         .bodyPart(fileP);
                     
-                    final WebTarget target = client.target("http://localhost:8080/WS-Backend/resources/jakartaee9/register");
+                    final WebTarget target = client.target("http://localhost:8080/Backend/resources/jakartaee9/register");
                     final Response resp = target.request().post(Entity.entity(multipart, multipart.getMediaType()));
                     int code = resp.getStatus();
                 
