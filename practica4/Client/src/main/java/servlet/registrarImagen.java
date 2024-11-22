@@ -73,33 +73,29 @@ public class registrarImagen extends HttpServlet {
                 String creator = session.getAttribute("username").toString();
                 String creationDate = request.getParameter("cdate");
                 final Part filePart = request.getPart("file");
+                String filename = filePart.getSubmittedFileName();
                 
-                if (!title.isBlank() && title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && filePart != null) {
+                if (!title.isBlank() && description != null && keywords != null && author != null && creator != null && creationDate != null && filePart != null) {
                     
-                    StringBuilder data = new StringBuilder();
-                    data.append("title=");
-                    data.append(URLEncoder.encode(title, "UTF-8"));
-                    data.append("&description=");
-                    data.append(URLEncoder.encode(description, "UTF-8"));
-                    data.append("&keywords=");
-                    data.append(URLEncoder.encode(keywords, "UTF-8"));
-                    data.append("&author=");
-                    data.append(URLEncoder.encode(author, "UTF-8"));
-                    data.append("&creator=");
-                    data.append(URLEncoder.encode(creator, "UTF-8"));
-                    data.append("&capture=");
-                    data.append(URLEncoder.encode(creationDate, "UTF-8"));
+                   final Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
+                   StreamDataBodyPart fileP = new StreamDataBodyPart("file", filePart.getInputStream());
+                   FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+                    final FormDataMultiPart multipart = (FormDataMultiPart) formDataMultiPart
+                        .field("title", title, MediaType.TEXT_PLAIN_TYPE)
+                        .field("description", description, MediaType.TEXT_PLAIN_TYPE)
+                        .field("keywords", keywords, MediaType.TEXT_PLAIN_TYPE)
+                        .field("author", author, MediaType.TEXT_PLAIN_TYPE)
+                        .field("creator", creator, MediaType.TEXT_PLAIN_TYPE)
+                        .field("capture", creationDate, MediaType.TEXT_PLAIN_TYPE)
+                        .field("filename", filename, MediaType.TEXT_PLAIN_TYPE)
+                        .bodyPart(fileP);
                     
-                    URL url = new URL("http://localhost:8080/Backend/resources/jakartaee9/register");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
-                    connection.setDoOutput(true);
-                    connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
-
-                    int code = connection.getResponseCode();
-                    connection.disconnect();
+                    final WebTarget target = client.target("http://localhost:8080/WS-Backend/resources/jakartaee9/register");
+                    final Response resp = target.request().post(Entity.entity(multipart, multipart.getMediaType()));
+                    int code = resp.getStatus();
+                
+                    formDataMultiPart.close();
+                    multipart.close();
                     
                     if (code == 201) {
                          session.setAttribute("successMessage", "Image was uploaded correctly!");

@@ -54,9 +54,8 @@ public class OperationsDB {
         }
     }
     
-    public static int upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate, Connection connection){
+    public static int upload_image (String title, String description, String keywords, String author, String creator, String creationDate, String uploadDate, String filename, Connection connection){
         try{
-            String filename = "No file upload";
 
             String query = "insert into image(title, description, keywords, author, creator, capture_date, storage_date, filename) values (?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(query);

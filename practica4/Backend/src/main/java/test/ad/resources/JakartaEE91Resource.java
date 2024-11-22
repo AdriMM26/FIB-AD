@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.InputStream;
 
 
 
@@ -138,6 +139,8 @@ public class JakartaEE91Resource {
     * @param author
     * @param creator
     * @param capt_date
+    * @param filename
+    * @param fileInputStream
     * @return
     */
     @Path("register")
@@ -149,12 +152,14 @@ public class JakartaEE91Resource {
             @FormParam("keywords") String keywords,
             @FormParam("author") String author,
             @FormParam("creator") String creator,
-            @FormParam("capture") String capt_date){
+            @FormParam("capture") String capt_date,
+            @FormParam("filename") String filename,
+            @FormParam("file") InputStream fileInputStream) {
         try{
             Connection connection = ConnectDB.open_connection();
             String uploadDate = LocalDate.now().toString();
             
-            Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, capt_date, uploadDate, connection);
+            Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, capt_date, uploadDate, filename,connection);
             ConnectDB.close_connection(connection);
             if(insertID > 0){
                 return Response.status(201).build();
