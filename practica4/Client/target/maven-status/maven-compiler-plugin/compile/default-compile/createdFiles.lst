@@ -1,7 +1,6 @@
 servlet/buscarImagen.class
 servlet/register.class
 test/ad/resources/JakartaEE91Resource.class
-servlet/descargarImagen.class
 servlet/login.class
 servlet/eliminarImagen.class
 servlet/registrarImagen.class
