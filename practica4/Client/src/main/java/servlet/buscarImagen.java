@@ -49,7 +49,6 @@ public class buscarImagen extends HttpServlet {
         else {
             try (PrintWriter out = response.getWriter()) {
 
-                String id = request.getParameter("id");
                 String title = request.getParameter("title");
                 String description = request.getParameter("descp");
                 String keywords = request.getParameter("keyw");
@@ -58,9 +57,7 @@ public class buscarImagen extends HttpServlet {
                 
                 StringBuilder data = new StringBuilder();
                 data.append("http://localhost:8080/Backend/resources/jakartaee9/search");
-                data.append("?id=");
-                data.append(URLEncoder.encode(id, "UTF-8"));
-                data.append("&title=");
+                data.append("?title=");
                 data.append(URLEncoder.encode(title, "UTF-8"));
                 data.append("&date=");
                 data.append(URLEncoder.encode(creationDate, "UTF-8"));

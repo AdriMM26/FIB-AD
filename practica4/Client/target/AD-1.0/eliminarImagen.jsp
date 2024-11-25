@@ -17,6 +17,8 @@
             String id = request.getParameter("id");
             String title = request.getParameter("title");
             String creator = request.getParameter("creator");
+            String filename = request.getParameter("filename");
+            
             //session.removeAttribute("creator");
             String realUser = (String)session.getAttribute("username");
             if(!creator.equals(realUser)){
@@ -34,7 +36,7 @@
         <h1>Delete image</h1>
         <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">GO TO MENU</button>
         <h2>Are you sure you want to delete the image titled: <% out.println(title); %> ?</h2>
-        <%out.println("<div class=\"image-container\"> <img src=\"http://localhost:8080/practica2/imageDB/" + title + "_" + id + "\" alt=\"Image not found\"/></div>");%>
+        <%out.println("<div class=\"image-container\"> <img src=\"http://localhost:8080/Client/imageDB/" + filename + "_" + id + "\" alt=\"Image not found\"/></div>");%>
         <div class="btn">
             <form action="eliminarImagen" method="POST">
                <div class="button-display">

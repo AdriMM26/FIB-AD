@@ -73,7 +73,7 @@
         document.body.appendChild(form);
         form.submit();
     };
-    function deleteImage(id, title, creator) {
+    function deleteImage(id, title, creator, filename) {
         // Create a form dynamically
         const form = document.createElement('form');
         form.method = 'POST';
@@ -94,11 +94,17 @@
         inputCreator.type = 'hidden';
         inputCreator.name = 'creator';
         inputCreator.value = creator;
+        
+        const inputFilename = document.createElement('input');
+        inputFilename.type = 'hidden';
+        inputFilename.name = 'filename';
+        inputFilename.value = filename;
 
         // Append inputs to the form
         form.appendChild(inputId);
         form.appendChild(inputTitle);
         form.appendChild(inputCreator);
+        form.appendChild(inputFilename);
 
         // Append the form to the body and submit it
         document.body.appendChild(form);
@@ -117,10 +123,7 @@
             <button class="button-logout" type="button" onclick="window.location.href='logout.jsp'">LOG OUT</button>
             <button class="button-back" type="button" onclick="window.location.href='menu.jsp'">GO TO MENU</button>
             <div class = "filter">
-                <form action="buscarImagen" method = "POST">
-                    <div class="input-box">
-                    <input type="number" class="input-field" name="id" placeholder="Image ID">
-                    </div> 
+                <form action="buscarImagen" method = "POST"> 
                     <div class="input-box">
                     <input type="text" class="input-field" name="title" placeholder="Image title">
                     </div> 
@@ -155,8 +158,8 @@
                                 out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/" + imageInfo[8] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
-                                out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"','"+ imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
-                                out.println("<button class=\"button-personalized button-delete\" onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] +"')\">Delete</button>");
+                                out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
+                                out.println("<button class=\"button-personalized button-delete\" onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[8] +"')\">Delete</button>");
                                 out.println("</div>");
                                 out.println("<br> </div>");   
                             }

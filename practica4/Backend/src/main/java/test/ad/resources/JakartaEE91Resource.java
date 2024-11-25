@@ -67,7 +67,6 @@ public class JakartaEE91Resource {
     
     /**
     * GET method to search images with zero or more parameters, if zero, returns all the images in the db.
-    * @param id
     * @param title
     * @param date
     * @param author
@@ -78,15 +77,14 @@ public class JakartaEE91Resource {
     @Path("search")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchByParameters (@QueryParam("id") String id,
-            @QueryParam("title") String title,
+    public Response searchByParameters (@QueryParam("title") String title,
             @QueryParam("date") String date,
             @QueryParam("author") String author,
             @QueryParam("keywords") String keywords,
             @QueryParam("description") String description) {
         try {
             Connection connection = ConnectDB.open_connection();
-            List <String[]> images = OperationsDB.get_images(id,title, description, keywords, author, date, connection);
+            List <String[]> images = OperationsDB.get_images("",title, description, keywords, author, date, connection);
             String json = null;
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
