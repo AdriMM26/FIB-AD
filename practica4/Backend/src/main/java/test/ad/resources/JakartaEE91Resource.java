@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.core.StreamingOutput;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -182,6 +186,58 @@ public class JakartaEE91Resource {
             Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
             return Response.serverError().build();
         }  
+    }
+    
+    /**
+    * GET method to download an image
+    * @param id
+    * @return
+    */
+    @Path("download/{id}")
+    @GET
+    @Produces({"image/jpeg", "image/png", "image/gif"})
+    public Response downloadImage (@PathParam("id") String id) {
+        try{
+            Connection connection = ConnectDB.open_connection();
+            List <String[]> images = OperationsDB.get_images(id,"", "", "", "", "", connection);
+            ConnectDB.close_connection(connection);
+            if(images == null) return Response.status(404).build();
+            
+            String [] imageInfo = images.get(0);
+            String filename = imageInfo[8] + "_" + imageInfo[0];
+            
+            File path = new File("/var/webapp/imageDB");
+            File file = new File (path, filename);
+            
+            if(file.exists()) {
+                InputStream fileInputStream = new FileInputStream(file);
+                
+                StreamingOutput stream = output -> {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    
+                    while((bytesRead = fileInputStream.read(buffer)) != -1) {
+                        output.write(buffer, 0, bytesRead);
+                    }
+                    
+                    fileInputStream.close();
+                    output.close();
+                };
+                
+                String extension = "";
+                int lastDotIndex = imageInfo[8].lastIndexOf(".");
+                if(lastDotIndex >= 0) {
+                    extension = filename.substring(lastDotIndex+1);
+                }
+                
+                return Response.ok(stream, "image/"+extension+"").build();
+            }
+            else return Response.status(404).build();
+            
+        } catch (FileNotFoundException | ClassNotFoundException ex) {
+            Logger.getLogger(JakartaEE91Resource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().build();
+        }
     }
     
     /**

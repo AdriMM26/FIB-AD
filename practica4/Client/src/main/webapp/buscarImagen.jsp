@@ -111,6 +111,26 @@
         form.submit();
     };
     
+    function downloadImage(id) {
+        // Create a form dynamically
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'descargarImagen'; // The JSP that handles the deletion
+
+        // Add hidden fields for id, title, and creator
+        const inputId = document.createElement('input');
+        inputId.type = 'hidden';
+        inputId.name = 'id';
+        inputId.value = id;
+
+        // Append inputs to the form
+        form.appendChild(inputId);
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
+    };
+    
     </script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -160,11 +180,16 @@
                                 out.println("<div class=\"button-display\">");
                                 out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
                                 out.println("<button class=\"button-personalized button-delete\" onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[8] +"')\">Delete</button>");
+                                out.println("<button class=\"button-personalized button-download\" onClick= \"downloadImage('"+ imageInfo[0] +"')\">Download</button>");
                                 out.println("</div>");
                                 out.println("<br> </div>");   
                             }
                             else  {
                                 out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                                out.println("<br>");
+                                out.println("<div class=\"button-display\">");
+                                out.println("<button class=\"button-personalized button-download\" onClick= \"downloadImage('"+ imageInfo[0] +"')\">Download</button>");
+                                out.println("</div>");
                                 out.println("<br> </div>");
                             }
                         }
