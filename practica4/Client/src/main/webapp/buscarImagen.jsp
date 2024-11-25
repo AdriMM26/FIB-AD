@@ -165,7 +165,7 @@
                                 out.println("<br> </div>");   
                             }
                             else  {
-                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[1] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[8] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
                                 out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Backend/resources/jakartaee9/download/" + imageInfo[0] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
