@@ -7,11 +7,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.awt.Image;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -57,8 +62,12 @@ public class descargarImagen extends HttpServlet {
                     connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                     connection.setDoOutput(true);
 
-                    InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-                    reader.read();
+                    /*
+                    InputStream reader = new InputStream(connection.getInputStream()) {};
+                    Image image = ImageIO.read(reader);
+                    File outputFile = new File("downloaded_image.jpg");
+                    ImageIO.write((RenderedImage) image, "jpg", outputFile);
+                    */
                     
                     int code = connection.getResponseCode();
                     connection.disconnect();
