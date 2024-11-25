@@ -76,7 +76,7 @@ public class modificarImagen extends HttpServlet {
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    connection.setRequestProperty("Content-Lenght",Integer.toString(data.toString().getBytes("UTF-8").length));
+                    connection.setRequestProperty("Content-Length",Integer.toString(data.toString().getBytes("UTF-8").length));
                     connection.setDoOutput(true);
                     connection.getOutputStream().write(data.toString().getBytes("UTF-8"));
 
