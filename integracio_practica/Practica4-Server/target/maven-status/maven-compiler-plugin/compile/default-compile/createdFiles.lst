@@ -1,0 +1,4 @@
+dbConnector/dbConnector.class
+test/restad/JakartaRestConfiguration.class
+restad/restoperations/RestOperations.class
+test/restad/resources/JakartaEE91Resource.class
