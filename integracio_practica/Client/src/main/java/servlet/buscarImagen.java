@@ -81,24 +81,25 @@ public class buscarImagen extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
 
                 String title = request.getParameter("title");
-                String description = request.getParameter("descp");
+                String creator = request.getParameter("creator");
                 String keywords = request.getParameter("keyw");
                 String author = request.getParameter("ath");
                 String creationDate = request.getParameter("cdate");
                 
                 StringBuilder data = new StringBuilder();
-                data.append("title=");
+                data.append("id=");
+                //data.append(URLEncoder.encode(title, "UTF-8"));
+                data.append("&title=");
                 data.append(URLEncoder.encode(title, "UTF-8"));
                 data.append("&keywords=");
                 data.append(URLEncoder.encode(keywords, "UTF-8"));
                 data.append("&author=");
                 data.append(URLEncoder.encode(author, "UTF-8"));
+                data.append("&creator=");
+                data.append(URLEncoder.encode(creator, "UTF-8"));
                 data.append("&date=");
                 data.append(URLEncoder.encode(creationDate, "UTF-8"));   
-                data.append("&description=");
-                data.append(URLEncoder.encode(description, "UTF-8"));
                 
-
                 
                 URL url = new URL("http://localhost:8080/Practica4-Server/resources/api/search");
                 //URI uri = new URI(url.getProtocol(), null, url.getHost(), url.getPort(), url.getPath(), data.toString(), null);
@@ -125,10 +126,6 @@ public class buscarImagen extends HttpServlet {
                 connection.disconnect();
                 
                 int code = connection.getResponseCode();
-                String result = datareturn.toString();
-                
-                System.out.println(datareturn);
-                System.out.println(code);
                 
                 if (code == 200) {
                     List<String[]> images;

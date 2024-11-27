@@ -128,7 +128,7 @@
                     <input type="text" class="input-field" name="title" placeholder="Image title">
                     </div> 
                     <div class="input-box">
-                        <input type="text" class="input-field" name="descp" placeholder="Image description">
+                        <input type="text" class="input-field" name="creator" placeholder="Image Creator">
                     </div>
                     <div class="input-box">
                         <input type="text" class="input-field" name="keyw" placeholder="Image keywords">
@@ -155,7 +155,7 @@
                         for(int i = 0; i < total; ++i) {
                             String [] imageInfo = gallery.get(i);
                             if(imageInfo[0].equals(username)) {
-                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[8]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/" + imageInfo[1] + "_" + imageInfo[7] + "\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[8]+"</h3> <img src=\"http://localhost:8080/Client/ad-lab/" + imageInfo[1] + "\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
                                 out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[7] +"','"+ imageInfo[8] +"','"+ imageInfo[0] + "','" + imageInfo[6] +"','"+ imageInfo[2] +"','"+ imageInfo[4] +"','"+ imageInfo[5] +"')\">Modify</button>");
@@ -165,7 +165,7 @@
                                 out.println("<br> </div>");   
                             }
                             else  {
-                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[8]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[1] +"_"+ imageInfo[7] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[8]+"</h3> <img src=\"http://localhost:8080/Client/ad-lab/"+ imageInfo[1] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
                                 out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/api/download/" + imageInfo[7] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
