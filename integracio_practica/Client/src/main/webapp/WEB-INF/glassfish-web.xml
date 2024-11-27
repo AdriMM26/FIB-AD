@@ -22,5 +22,5 @@
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
-  <property name="alternatedocroot_1" value="from=/imageDB/* dir=/var/webapp/" />
+  <property name="alternatedocroot_1" value="from=/ad-lab/* dir=/var/webapp/" />
 </glassfish-web-app>

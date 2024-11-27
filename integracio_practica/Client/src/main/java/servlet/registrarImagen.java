@@ -97,7 +97,7 @@ public class registrarImagen extends HttpServlet {
                     formDataMultiPart.close();
                     multipart.close();
                     
-                    if (code == 201) {
+                    if (code == 200) {
                          session.setAttribute("successMessage", "Image was uploaded correctly!");
                          session.setAttribute("origin","Menu");
                          response.sendRedirect("success.jsp");
