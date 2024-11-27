@@ -50,7 +50,7 @@ public class register extends HttpServlet {
                 data.append("&password=");
                 data.append(URLEncoder.encode(password, "UTF-8"));
 
-                URL url = new URL("http://localhost:8080/Practica4-Server/resources/jakartaee9/register_user");
+                URL url = new URL("http://localhost:8080/Practica4-Server/resources/api/register_user");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

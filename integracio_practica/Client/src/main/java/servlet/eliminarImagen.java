@@ -57,7 +57,7 @@ public class eliminarImagen extends HttpServlet {
                     data.append("&creator=");
                     data.append(URLEncoder.encode(creator, "UTF-8"));
 
-                    URL url = new URL("http://localhost:8080/Practica4-Server/resources/jakartaee9/delete");
+                    URL url = new URL("http://localhost:8080/Practica4-Server/resources/api/delete");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

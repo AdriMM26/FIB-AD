@@ -56,7 +56,7 @@ public class buscarImagen extends HttpServlet {
                 String creationDate = request.getParameter("cdate");
                 
                 StringBuilder data = new StringBuilder();
-                data.append("http://localhost:8080/Practica4-Server/resources/jakartaee9/search");
+                data.append("http://localhost:8080/Practica4-Server/resources/api/search");
                 data.append("?title=");
                 data.append(URLEncoder.encode(title, "UTF-8"));
                 data.append("&date=");

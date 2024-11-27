@@ -90,7 +90,7 @@ public class registrarImagen extends HttpServlet {
                         .field("filename", filename, MediaType.TEXT_PLAIN_TYPE)
                         .bodyPart(fileP);
                     
-                    final WebTarget target = client.target("http://localhost:8080/Practica4-Server/resources/jakartaee9/register");
+                    final WebTarget target = client.target("http://localhost:8080/Practica4-Server/resources/api/register");
                     final Response resp = target.request().post(Entity.entity(multipart, multipart.getMediaType()));
                     int code = resp.getStatus();
                 

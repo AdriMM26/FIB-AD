@@ -72,7 +72,7 @@ public class modificarImagen extends HttpServlet {
                     data.append("&capture=");
                     data.append(URLEncoder.encode(creationDate, "UTF-8"));
 
-                    URL url = new URL("http://localhost:8080/Practica4-Server/resources/jakartaee9/modify");
+                    URL url = new URL("http://localhost:8080/Practica4-Server/resources/api/modify");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

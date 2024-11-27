@@ -160,7 +160,7 @@
                                 out.println("<div class=\"button-display\">");
                                 out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
                                 out.println("<button class=\"button-personalized button-delete\" onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[8] +"')\">Delete</button>");
-                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/jakartaee9/download/" + imageInfo[0] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
+                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/api/imgContent/" + imageInfo[0] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
                                 out.println("</div>");
                                 out.println("<br> </div>");   
                             }
@@ -168,7 +168,7 @@
                                 out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[8] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
-                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/jakartaee9/download/" + imageInfo[0] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
+                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/api/download/" + imageInfo[0] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
                                 out.println("</div>");
                                 out.println("<br> </div>");
                             }
