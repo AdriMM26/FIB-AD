@@ -6,4 +6,3 @@ servlet/eliminarImagen.class
 servlet/registrarImagen.class
 test/ad/JakartaRestConfiguration.class
 servlet/modificarImagen.class
-servlet/buscarImagen$1.class
