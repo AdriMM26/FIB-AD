@@ -61,12 +61,14 @@ public class registrarImagen extends HttpServlet {
             String creator = session.getAttribute("username").toString();
             String creationDate = request.getParameter("cdate");
             String uploadDate = LocalDate.now().toString();
-            Part filePart = request.getPart("file");
+            final Part filePart = request.getPart("file");
+            String filename = filePart.getSubmittedFileName();
             
             if (title != null && description != null && keywords != null && author != null && creator != null && creationDate != null && uploadDate != null && filePart != null) {
                    Integer insertID = OperationsDB.upload_image(title, description, keywords, author, creator, creationDate, uploadDate, filePart, connection);
                    if (insertID > 0) {
-                       boolean savedImage = insert_image_to_disk(filePart, title, insertID.toString());
+
+                       boolean savedImage = insert_image_to_disk(filePart, filename, insertID.toString());
                        if(savedImage){
                            ConnectDB.close_connection(connection);
                            session.setAttribute("successMessage", "Image was uploaded correctly!");
@@ -145,10 +147,10 @@ public class registrarImagen extends HttpServlet {
     }// </editor-fold
 
     
-    private boolean insert_image_to_disk(Part filePart, String title, String uid){
+    private boolean insert_image_to_disk(Part filePart, String file_name, String uid){
         try{
             File path = new File("/var/webapp/imageDB");
-            String filename = title+"_"+uid;
+            String filename = file_name+"_"+uid;
         
             File file = new File (path, filename);
         
