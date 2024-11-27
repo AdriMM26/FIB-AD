@@ -154,21 +154,21 @@
                          
                         for(int i = 0; i < total; ++i) {
                             String [] imageInfo = gallery.get(i);
-                            if(imageInfo[5].equals(username)) {
-                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/" + imageInfo[8] + "_" + imageInfo[0] + "\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                            if(imageInfo[0].equals(username)) {
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[8]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/" + imageInfo[1] + "_" + imageInfo[7] + "\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
-                                out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[2] +"','"+ imageInfo[3] +"','"+ imageInfo[4] +"','"+ imageInfo[6] +"')\">Modify</button>");
-                                out.println("<button class=\"button-personalized button-delete\" onClick= \"deleteImage('"+ imageInfo[0] +"','"+ imageInfo[1] +"','"+ imageInfo[5] + "','" + imageInfo[8] +"')\">Delete</button>");
-                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/api/imgContent/" + imageInfo[0] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
+                                out.println("<button class=\"button-personalized button-modify\" onClick= \"modifyImage('"+ imageInfo[7] +"','"+ imageInfo[8] +"','"+ imageInfo[0] + "','" + imageInfo[6] +"','"+ imageInfo[2] +"','"+ imageInfo[4] +"','"+ imageInfo[5] +"')\">Modify</button>");
+                                out.println("<button class=\"button-personalized button-delete\" onClick= \"deleteImage('"+ imageInfo[7] +"','"+ imageInfo[8] +"','"+ imageInfo[0] + "','" + imageInfo[1] +"')\">Delete</button>");
+                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/api/imgContent/" + imageInfo[7] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
                                 out.println("</div>");
                                 out.println("<br> </div>");   
                             }
                             else  {
-                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[1]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[8] +"_"+ imageInfo[0] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
+                                out.println("<div class=\"image-container\"> <h3 class=\"title\">"+imageInfo[8]+"</h3> <img src=\"http://localhost:8080/Client/imageDB/"+ imageInfo[1] +"_"+ imageInfo[7] +"\" alt=\"Image not found\"/> <br> <label class=\"author\">Author: "+imageInfo[4]+"</label> <br> ");
                                 out.println("<br>");
                                 out.println("<div class=\"button-display\">");
-                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/api/download/" + imageInfo[0] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
+                                out.println("<button class=\"button-personalized button-download\"><a href= \"http://localhost:8080/Practica4-Server/resources/api/download/" + imageInfo[7] + "\" style=\"text-decoration: none; color: white;\">Download</a></button>");
                                 out.println("</div>");
                                 out.println("<br> </div>");
                             }
