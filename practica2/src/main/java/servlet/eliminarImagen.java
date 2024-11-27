@@ -46,8 +46,9 @@ public class eliminarImagen extends HttpServlet {
             Connection connection = ConnectDB.open_connection();
             String id = request.getParameter("id");
             String title = request.getParameter("title");
+            String filename = request.getParameter("filename");
             
-            String imageName = title+"_"+id;
+            String imageName = filename+"_"+id;
 
             File file = new File("/var/webapp/imageDB/" + imageName);
             if(OperationsDB.is_user_image(connection, title, id, session.getAttribute("username").toString())) {
