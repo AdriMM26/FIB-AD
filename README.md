@@ -4,7 +4,4 @@
 * [Practica 2](https://github.com/AdriMM26/AD/tree/main/practica2)
 * [Practica 3](https://github.com/AdriMM26/AD/tree/main/practica3)
 * [Practica 4](https://github.com/AdriMM26/AD/tree/main/practica4)
-* Checklist:
-  * [ ] **Fer informe**
-    * [ ] Part pràctica 4
-    * [ ] Part final
+* [Practica FINAL](https://github.com/AdriMM26/AD/tree/main/integracio_practica)
